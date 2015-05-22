@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<FileZilla3>
+    <Servers>
+        <Folder expanded="1">TanaejProjs
+            <Server>
+                <Host>almobi.com</Host>
+                <Port>22</Port>
+                <Protocol>1</Protocol>
+                <Type>0</Type>
+                <User>m6b32139584809</User>
+                <Pass>tC.7+39g</Pass>
+                <Logontype>1</Logontype>
+                <TimezoneOffset>0</TimezoneOffset>
+                <PasvMode>MODE_DEFAULT</PasvMode>
+                <MaximumMultipleConnections>0</MaximumMultipleConnections>
+                <EncodingType>Auto</EncodingType>
+                <BypassProxy>0</BypassProxy>
+                <Name>almobi.com</Name>
+                <Comments>m6b32139584809&#x0A;tC.7+39g</Comments>
+                <LocalDir />
+                <RemoteDir />
+                <SyncBrowsing>0</SyncBrowsing>almobi.com
+            </Server>
+            <Server>
+                <Host>chizlr.com</Host>
+                <Port>21</Port>
+                <Protocol>0</Protocol>
+                <Type>0</Type>
+                <User>chisler</User>
+                <Pass>eje647i5</Pass>
+                <Logontype>1</Logontype>
+                <TimezoneOffset>0</TimezoneOffset>
+                <PasvMode>MODE_DEFAULT</PasvMode>
+                <MaximumMultipleConnections>0</MaximumMultipleConnections>
+                <EncodingType>Auto</EncodingType>
+                <BypassProxy>0</BypassProxy>
+                <Name>chizlr.com</Name>
+                <Comments>eje647i5</Comments>
+                <LocalDir />
+                <RemoteDir />
+                <SyncBrowsing>0</SyncBrowsing>chizlr.com
+            </Server>
+            <Server>
+                <Host>dev.tanaej.com</Host>
+                <Port>21</Port>
+                <Protocol>0</Protocol>
+                <Type>0</Type>
+                <User>devtanaej</User>
+                <Pass>De^Tan^1!</Pass>
+                <Logontype>1</Logontype>
+                <TimezoneOffset>0</TimezoneOffset>
+                <PasvMode>MODE_DEFAULT</PasvMode>
+                <MaximumMultipleConnections>0</MaximumMultipleConnections>
+                <EncodingType>Auto</EncodingType>
+                <BypassProxy>0</BypassProxy>
+                <Name>dev.tanaej.com</Name>
+                <Comments />
+                <LocalDir />
+                <RemoteDir />
+                <SyncBrowsing>0</SyncBrowsing>dev.tanaej.com
+            </Server>
+            <Server>
+                <Host>ftp.mlmplayers.com</Host>
+                <Port>21</Port>
+                <Protocol>0</Protocol>
+                <Type>0</Type>
+                <User>riaz@mlmplayers.com</User>
+                <Pass>abcd1234</Pass>
+                <Logontype>1</Logontype>
+                <TimezoneOffset>0</TimezoneOffset>
+                <PasvMode>MODE_DEFAULT</PasvMode>
+                <MaximumMultipleConnections>0</MaximumMultipleConnections>
+                <EncodingType>Auto</EncodingType>
+                <BypassProxy>0</BypassProxy>
+                <Name>DirectSellingReport</Name>
+                <Comments />
+                <LocalDir />
+                <RemoteDir />
+                <SyncBrowsing>0</SyncBrowsing>DirectSellingReport
+            </Server>
+            <Server>
+                <Host>ftp.franceandson.com</Host>
+                <Port>21</Port>
+                <Protocol>0</Protocol>
+                <Type>0</Type>
+                <User>france</User>
+                <Pass>htgkq37c</Pass>
+                <Logontype>1</Logontype>
+                <TimezoneOffset>0</TimezoneOffset>
+                <PasvMode>MODE_DEFAULT</PasvMode>
+                <MaximumMultipleConnections>0</MaximumMultipleConnections>
+                <EncodingType>Auto</EncodingType>
+                <BypassProxy>0</BypassProxy>
+                <Name>franceandson.com</Name>
+                <Comments />
+                <LocalDir />
+                <RemoteDir />
+                <SyncBrowsing>0</SyncBrowsing>franceandson.com
+            </Server>
+            <Server>
+                <Host>ftp.hollywoodtires.net</Host>
+                <Port>21</Port>
+                <Protocol>4</Protocol>
+                <Type>0</Type>
+                <User>hollywoodtires@hollywoodtires.net</User>
+                <Pass>M1chel1010</Pass>
+                <Logontype>1</Logontype>
+                <TimezoneOffset>0</TimezoneOffset>
+                <PasvMode>MODE_DEFAULT</PasvMode>
+                <MaximumMultipleConnections>0</MaximumMultipleConnections>
+                <EncodingType>Auto</EncodingType>
+                <BypassProxy>0</BypassProxy>
+                <Name>ftp.hollywoodtires.net</Name>
+                <Comments>M1chel1010</Comments>
+                <LocalDir />
+                <RemoteDir />
+                <SyncBrowsing>0</SyncBrowsing>ftp.hollywoodtires.net
+            </Server>
+            <Server>
+                <Host>goodform.nyc</Host>
+                <Port>21</Port>
+                <Protocol>0</Protocol>
+                <Type>0</Type>
+                <User>goodfurn</User>
+                <Pass>gsg8c3rv</Pass>
+                <Logontype>1</Logontype>
+                <TimezoneOffset>0</TimezoneOffset>
+                <PasvMode>MODE_DEFAULT</PasvMode>
+                <MaximumMultipleConnections>0</MaximumMultipleConnections>
+                <EncodingType>Auto</EncodingType>
+                <BypassProxy>0</BypassProxy>
+                <Name>goodform.nyc</Name>
+                <Comments />
+                <LocalDir />
+                <RemoteDir />
+                <SyncBrowsing>0</SyncBrowsing>goodform.nyc
+            </Server>
+            <Server>
+                <Host>johnhanly.com</Host>
+                <Port>21</Port>
+                <Protocol>0</Protocol>
+                <Type>0</Type>
+                <User>development@johnhanly.com</User>
+                <Pass>s=U~#D$^RVu!</Pass>
+                <Logontype>1</Logontype>
+                <TimezoneOffset>0</TimezoneOffset>
+                <PasvMode>MODE_DEFAULT</PasvMode>
+                <MaximumMultipleConnections>0</MaximumMultipleConnections>
+                <EncodingType>Auto</EncodingType>
+                <BypassProxy>0</BypassProxy>
+                <Name>johnhanly.com</Name>
+                <Comments />
+                <LocalDir />
+                <RemoteDir />
+                <SyncBrowsing>0</SyncBrowsing>johnhanly.com
+            </Server>
+            <Server>
+                <Host>johnhanly.com</Host>
+                <Port>21</Port>
+                <Protocol>0</Protocol>
+                <Type>0</Type>
+                <User>johnhan</User>
+                <Pass>gh78f;4mf</Pass>
+                <Logontype>1</Logontype>
+                <TimezoneOffset>0</TimezoneOffset>
+                <PasvMode>MODE_DEFAULT</PasvMode>
+                <MaximumMultipleConnections>0</MaximumMultipleConnections>
+                <EncodingType>Auto</EncodingType>
+                <BypassProxy>0</BypassProxy>
+                <Name>johnhanly.com1</Name>
+                <Comments />
+                <LocalDir />
+                <RemoteDir />
+                <SyncBrowsing>0</SyncBrowsing>johnhanly.com1
+            </Server>
+            <Server>
+                <Host>heron.directrouter.co.uk</Host>
+                <Port>21</Port>
+                <Protocol>0</Protocol>
+                <Type>0</Type>
+                <User>kfnuolia</User>
+                <Pass>a09BAter74</Pass>
+                <Logontype>1</Logontype>
+                <TimezoneOffset>0</TimezoneOffset>
+                <PasvMode>MODE_DEFAULT</PasvMode>
+                <MaximumMultipleConnections>0</MaximumMultipleConnections>
+                <EncodingType>Auto</EncodingType>
+                <BypassProxy>0</BypassProxy>
+                <Name>souths.co.uk</Name>
+                <Comments />
+                <LocalDir />
+                <RemoteDir />
+                <SyncBrowsing>0</SyncBrowsing>souths.co.uk
+            </Server>
+            <Server>
+                <Host>ftp.smartbookingltd.com</Host>
+                <Port>21</Port>
+                <Protocol>0</Protocol>
+                <Type>0</Type>
+                <User> ihousesecurity@smartbookingltd.com</User>
+                <Pass>c0nv3rsation</Pass>
+                <Logontype>1</Logontype>
+                <TimezoneOffset>0</TimezoneOffset>
+                <PasvMode>MODE_DEFAULT</PasvMode>
+                <MaximumMultipleConnections>0</MaximumMultipleConnections>
+                <EncodingType>Auto</EncodingType>
+                <BypassProxy>0</BypassProxy>
+                <Name>www.ihousesecurity.com</Name>
+                <Comments />
+                <LocalDir />
+                <RemoteDir />
+                <SyncBrowsing>0</SyncBrowsing>www.ihousesecurity.com
+            </Server>
+        </Folder>
+    </Servers>
+</FileZilla3>

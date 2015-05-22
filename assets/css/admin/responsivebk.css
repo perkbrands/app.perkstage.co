@@ -1,0 +1,214 @@
+.mobileTriggerButton {
+	display:none;
+	position:relative;
+	cursor:pointer; 
+	width:31px; 
+	float:right; 
+	/*margin-right:-30px;*/
+	height:100%;
+	background:#2c3339 url(/img/splitPane_showMobile.png) 0 70px no-repeat ;
+}
+
+.mp-pushed .mobileTriggerButton {
+	background:#2c3339 url(/img/splitPane_hideMobile.png) 0 70px no-repeat ;	
+}
+
+.mp-pusher { left: 0; }
+
+
+@media only screen and (max-width: 960px) { 
+	
+	#subMenuContainer {
+		height:44px;
+	}
+	#subMenu {
+		padding:.75em;
+	}
+	
+
+	ul#subSectionNavButtonContainer li, ul.subSectionNavButtonContainerClass li {
+		font-size:1em;
+	}	
+	
+	
+
+	/* Dropdown */
+	ul#navButtonContainer ul li, ul.subSectionNavButtonContainerClass ul li {
+		font-size:1em;	
+		/*height:19px;*/
+		padding:.75em 1.5em .65em 0;	
+	}
+
+
+}
+
+
+
+@media only screen and (max-width: 768px) { 
+	
+	#loginContainer label.loginForm {
+		float:none;
+		font-size:.8em;
+	}
+
+	#loginContainer #top {
+		padding:6px 20px 0 20px;
+	}
+
+	ul#navButtonContainer {
+		padding:0;
+	}
+
+	.rightButtonsRow button {
+		display:none;
+	}
+
+	.manageButtonsHeader {
+		display:block;
+	}
+
+	.manageButtonsHeader button, .manageButtonsHeader button.cancel {
+		border:none;
+		height:22px;
+		width:auto;
+		font-size:.95em;
+		margin: 0;
+		color:#9b9fa2;
+	}
+
+	
+
+	#splitPlaneLeftContainer { background:#ffffff; }
+	#splitPaneLeft { display:none; }
+
+	/* When on push menu page and active at 768, add padding to right to compenstate for trigger button */
+	.scroller-inner .headerContainer {
+		padding-right:30px;
+	}
+
+
+	ul.subSectionNavButtonContainerClass li {
+		font-size:.95em;
+		margin-right: .9em;
+	}
+
+	ul.subSectionNavButtonContainerClass ul li:first-child {
+		padding-left:0;
+	}
+	
+
+
+
+	/* Dropdown */
+	ul#navButtonContainer ul, ul.subSectionNavButtonContainerClass ul {
+		display:list-item;
+		float:none;
+		width:auto;
+	}
+	ul#navButtonContainer ul#contentMenuDropdown, ul.subSectionNavButtonContainerClass ul#contentMenuDropdown {
+		margin-left:-85px; /* Slide the Content Dropdown further to left */
+		background: url(/img/dropDownMenuIcon.png) 91px 2px no-repeat;
+	}
+	
+	ul#navButtonContainer li:active > ul, ul.subSectionNavButtonContainerClass li:active > ul {
+		left:auto;
+		-webkit-opacity: 1;
+		-moz-opacity: 1;
+		opacity: 1;			
+	}
+	
+	ul#navButtonContainer ul li, ul.subSectionNavButtonContainerClass ul li {
+		float: none;;
+		position: relative;
+		min-width:200px;
+		margin: 0;
+		padding-left:0;
+		padding-right:0;		
+		text-align:center;
+	}
+	ul#navButtonContainer ul li.first, ul.subSectionNavButtonContainerClass ul li.first {
+		padding-left:inherit;
+	}
+	/* END dropdown */
+
+
+	ul#breadCrumbContainer li {
+		display:none;
+	}
+	
+	
+	ul#subSectionNavButtonContainerMobile { display:block; }
+	ul#subSectionNavButtonContainer { display:none; }
+
+	#userContainerMobile { display:block; }
+	#userContainer { display:none; }
+	
+	.mobileTriggerButton {	display:block; 	margin-right:-30px; }
+	.mp-pusher { left: 30px !important; }
+
+	#contentContainer {
+		padding-right:30px;
+		/*padding-left:30px;*/
+	}
+
+	#userContainerMobile {
+		float:right;
+		/* Push page back 30 pixels to compensate for push menu */
+		/*margin-right:30px;*/
+	}
+	
+	#splitPaneLeftContainer	{
+		display:none;
+	}
+	#splitPaneRightContainer	{
+		left:0;
+	}
+	
+	.leftPaneFilters, .leftPaneFiltersDetails	 {
+		padding:0 0 0 20px;
+	}
+	
+	
+	#splitPaneRight {
+		padding-right:10px;
+	}
+	
+	
+	ul.cardsBox li .plusSign {
+		height:40px;
+	}
+}
+
+@media only screen and (max-width: 500px) { 
+	.splitPlaneQuickDetails {
+		position:initial;
+		margin-top:-10px;
+		margin-left:18px;
+	}
+}
+
+
+@media only screen and (max-width: 400px) { 
+
+
+	ul.cardsBox li { float:none; }
+
+	ul#navButtonContainer li {
+		margin-right: 13px;
+	}
+	
+	.pageNotes button {
+		float:left;
+	}
+	
+	.rightPaneForm { width:auto; }
+
+	.rightPaneForm.shortTextBox {
+		width:auto;
+	}
+	
+	.leftPaneFilters select, .leftPaneFilters input[type=text] {
+		width:180px;
+	}
+	
+}
