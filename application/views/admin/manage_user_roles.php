@@ -8,515 +8,489 @@
 <link href="<?php echo base_url(); ?>assets/css/admin/responsive.css" rel="stylesheet" type="text/css" />
 <link href="<?php echo base_url(); ?>assets/css/admin/mlpmenu/component.css" rel="stylesheet" type="text/css" />
 
-
 <!--[if lte IE 8]>
 	<link rel="stylesheet" type="text/css" href="/css/ie8lte.css"/>
 <![endif]-->
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/jquery-ui.min.js"></script>
-
 <script src="<?php echo base_url() ?>assets/js/admin/mlpmenu/modernizr.custom.js"></script>
-
 <script type="text/javascript" src="<?php  echo base_url() ?>assets/js/admin/jquery.form.js"></script>
 
-<!--<script src="http://malsup.github.io/jquery.form.js"></script> -->
 
 </head>
-<?php // print_r($account_data); 
-//print_r($account_data);
- ?>
+
 <body>
-<?php // print_r($audiencedata); ?>
-  <?php if(isset($audiencedata) && $audiencedata!='')
-  {
-  		$array_length=count($audiencedata); 
-	  		for($i=0;$i<$array_length; $i=$i+1)
-			{
-				$postback[]=$audiencedata[$i]->audience_id; 
-			}
+<?php
+  if(isset($audiencedata) && $audiencedata!=''){
+    $array_length=count($audiencedata); 
+    for($i=0;$i<$array_length; $i=$i+1) {
+      $postback[]=$audiencedata[$i]->audience_id; 
+    }
   }
-  else
-  {
-	$postback='null';	
- }
+  else {
+    $postback='null';
+  }
 ?>
 <div class="container">
-<div id="splitPaneLeftContainer"></div>
-	<div id="splitPaneRightContainer"></div>
-	<!-- Push Wrapper -->
-    <div class="mp-pusher" id="mp-pusher">
+  <div id="splitPaneLeftContainer"></div>
+  <div id="splitPaneRightContainer"></div>
+<!-- Push Wrapper -->
+  <div class="mp-pusher" id="mp-pusher">
 
-        <!-- mp-menu -->
-        <nav id="mp-menu" class="mp-menu" >
-            <div class="mp-level">
-                <h2 class="icon icon-world">Manage User Account</h2>
-                
+  <!-- mp-menu -->
+  <nav id="mp-menu" class="mp-menu" >
+  <div class="mp-level">
+  <h2 class="icon icon-world">Manage User Account</h2>
 
-                	 <?php if($this->uri->segment(2)!='people_me' && $this->uri->segment(2)!='edit_people_me'){ ?>
-                            <ul class="leftPaneFilters">
-                                <form action="<?php echo base_url(); ?>people_user_controller/poeple_search" method="post" name="search_form" id="search_form">
-                               
-                               <li id="searchButtonLI">
-                               <?php
-							   $search_in='';
-							   if($this->uri->segment(2)=='people_administrator' || $this->uri->segment(2)=='edit_people_administrator' || $this->uri->segment(3)=='anew' || isset($roles) && $roles==1){
-							    $search_in='administrator';
-							   }
-							   if($this->uri->segment(2)=='people_editor' || $this->uri->segment(2)=='edit_people_editor' || $this->uri->segment(3)=='enew' || isset($roles) && $roles==2){
-							    $search_in='editor';
-							   }
-							   if($this->uri->segment(2)=='people_member' || $this->uri->segment(2)=='edit_people_member' || $this->uri->segment(3)=='mnew' || isset($roles) && $roles==3){
-							    $search_in='member';
-							   }
-							   ?>
-                               <input type="hidden" name="hidden_val_people" value="<?php echo $search_in; ?>"  />
-                                <input type="text" placeholder="Search" name="txt_search" value="<?php if(isset($search_field_value) && $search_field_value!=''){echo $search_field_value;} ?>"/>
-                                <button id="searchButton" type="submit" name="searchButton" value=""></button>
-                                
-                               </li>
-                               
-                                <li>
-                                    <select onchange="submit_change_val(this.value)" name="lst_filter">
-                                        <option value="2" <?php if(isset($search_var) && $search_var=='2'){echo "selected=selected";}?>>All</option>
-                                        <option value="1" <?php if(isset($search_var) && $search_var=='1'){echo "selected=selected";} ?>>Active</option>
-                                        <option value="0" <?php if(isset($search_var) && $search_var=='0'){echo "selected=selected";} ?>>Paused</option>
-                                    </select>
-                                    <input type="hidden" id="selected_value" name="selected_value" />
-                               </li>
-                                <li>
-                                <?php if($this->uri->segment(2)=='people_administrator' || $this->uri->segment(2)=='edit_people_administrator' || $this->uri->segment(3)=='anew'  || isset($roles) && $roles==1){?>
-                                <a href="<?php echo base_url(); ?>people_user_controller/all_administrator">
-                                <?php } ?>
-                                 <?php if($this->uri->segment(2)=='people_editor' || $this->uri->segment(2)=='edit_people_editor' || $this->uri->segment(3)=='enew'  || isset($roles) && $roles==2){?>
-                                <a href="<?php echo base_url(); ?>people_user_controller/all_editor">
-                                <?php } ?>
-                                 <?php if($this->uri->segment(2)=='people_member' || $this->uri->segment(2)=='edit_people_member' || $this->uri->segment(3)=='mnew'  || isset($roles) && $roles==3){?>
-                                <a href="<?php echo base_url(); ?>people_user_controller/all_member">
-                                <?php } ?>
-                                
-                                <button type="button" />View All</button></a></li>
-                            </ul>
-                            </form>
-                            <?php } ?>
-                    
-                    <div class="leftPaneFiltersDetails">
-		                    	 <?php if(isset($listing_data)){ ?>
-                                 <?php if($this->uri->segment(2)=='people_administrator' || isset($roles) && $roles==1 || $this->uri->segment(2)=='edit_people_administrator'){ ?>
-                    	<p><?php echo count($listing_data);?> Administrators, Displaying 1-<?php echo count($listing_data);?></p>
-                                 <?php } ?>
-                                 <?php if($this->uri->segment(2)=='people_editor' || isset($roles) && $roles==2 || $this->uri->segment(2)=='edit_people_editor'){ ?>
-                    	<p><?php echo count($listing_data);?> Editors, Displaying 1-<?php echo count($listing_data);?></p>
-                                 <?php } ?>
-                                 
-                                 <?php if($this->uri->segment(2)=='people_member' || isset($roles) && $roles==3 || $this->uri->segment(2)=='edit_people_member'){ ?>
-                    	<p><?php echo count($listing_data);?> Members, Displaying 1-<?php echo count($listing_data);?></p>
-                                 <?php } ?>
-                                 <?php if($this->uri->segment(2)=='people_me' || $this->uri->segment(2)=='edit_people_me'){ ?>
-                    	<p>      Me, Displaying</p>
-                                 <?php } ?>
+
+  <?php if($this->uri->segment(2)!='people_me' && $this->uri->segment(2)!='edit_people_me'){ ?>
+  <ul class="leftPaneFilters">
+  <form action="<?php echo base_url(); ?>people_user_controller/poeple_search" 
+        method="post" name="search_form" id="search_form">
+
+    <li id="searchButtonLI">
+      <?php
+      $search_in='';
+      if($this->uri->segment(2)=='people_administrator' || 
+              $this->uri->segment(2)=='edit_people_administrator' || 
+              $this->uri->segment(3)=='anew' || isset($roles) && $roles==1){
+        $search_in='administrator';
+      }
+      if($this->uri->segment(2)=='people_editor' || 
+              $this->uri->segment(2)=='edit_people_editor' || 
+              $this->uri->segment(3)=='enew' || isset($roles) && $roles==2){
+        $search_in='editor';
+      }
+      if($this->uri->segment(2)=='people_member' || 
+              $this->uri->segment(2)=='edit_people_member' || 
+              $this->uri->segment(3)=='mnew' || isset($roles) && $roles==3){
+        $search_in='member';
+      }
+      ?>
+      <input type="hidden" name="hidden_val_people" value="<?php echo $search_in; ?>"  />
+      <input type="text" placeholder="Search" name="txt_search" 
+             value="<?php if(isset($search_field_value) && $search_field_value!=''){echo $search_field_value;} ?>"/>
+      <button id="searchButton" type="submit" name="searchButton" value=""></button>
+    </li>
+    <li>
+      <select onchange="submit_change_val(this.value)" name="lst_filter">
+      <option value="2" 
+        <?php 
+          if(isset($search_var) && $search_var=='2'){echo "selected=selected";}
+         ?>>All</option>
+      <option value="1" 
+        <?php 
+          if(isset($search_var) && $search_var=='1'){echo "selected=selected";} 
+         ?>>Active</option>
+      <option value="0" 
+        <?php 
+        if(isset($search_var) && $search_var=='0'){echo "selected=selected";} 
+         ?>>Paused</option>
+      </select>
+      <input type="hidden" id="selected_value" name="selected_value" />
+    </li>
+    <li>
+      <?php if($this->uri->segment(2)=='people_administrator' || 
+              $this->uri->segment(2)=='edit_people_administrator' || 
+              $this->uri->segment(3)=='anew'  || isset($roles) && $roles==1){?>
+      <a href="<?php echo base_url(); ?>people_user_controller/all_administrator">
+      <?php } ?>
+      <?php if($this->uri->segment(2)=='people_editor' || 
+              $this->uri->segment(2)=='edit_people_editor' || 
+              $this->uri->segment(3)=='enew'  || isset($roles) && $roles==2){?>
+      <a href="<?php echo base_url(); ?>people_user_controller/all_editor">
+      <?php } ?>
+      <?php if($this->uri->segment(2)=='people_member' || 
+              $this->uri->segment(2)=='edit_people_member' || 
+              $this->uri->segment(3)=='mnew'  || isset($roles) && $roles==3){?>
+      <a href="<?php echo base_url(); ?>people_user_controller/all_member">
+      <?php } ?>
+
+    <button type="button" />View All</button></a></li>
+  </ul>
+  </form>
+  <?php } ?>
+
+  <div class="leftPaneFiltersDetails">
+  <?php if(isset($listing_data)){ ?>
+  <?php 
+    if($this->uri->segment(2)=='people_administrator' || 
+          isset($roles) && $roles==1 || 
+          $this->uri->segment(2)=='edit_people_administrator'){ ?>
+      <p><?php echo count($listing_data);?> Administrators, Displaying 1-
+        <?php echo count($listing_data);?>
+      </p>
+  <?php } ?>
+  <?php if($this->uri->segment(2)=='people_editor' || 
+          isset($roles) && $roles==2 || $this->uri->segment(2)=='edit_people_editor'){ ?>
+    <p><?php echo count($listing_data);?> Editors, Displaying 1-
+       <?php echo count($listing_data);?>
+    </p>
+  <?php } ?>
+
+  <?php if($this->uri->segment(2)=='people_member' || 
+          isset($roles) && $roles==3 || 
+          $this->uri->segment(2)=='edit_people_member'){ ?>
+  <p><?php echo count($listing_data);?> Members, Displaying 1-<?php echo count($listing_data);?></p>
+  <?php } ?>
+  <?php if($this->uri->segment(2)=='people_me' || 
+          $this->uri->segment(2)=='edit_people_me'){ ?>
+  <p>      Me, Displaying</p>
+  <?php } ?>
+  <?php } ?>
+  </div>
+
+  <?php 
+  $add_label_account = '';
+  if($this->uri->segment(2)=='people_administrator' || $this->uri->segment(2)=='edit_people_administrator' || $this->uri->segment(3)=='anew'  || isset($roles) && $roles==1){
+  $add_label_account='New Administrator';
+  }
+  if($this->uri->segment(2)=='people_editor' || $this->uri->segment(2)=='edit_people_editor' || $this->uri->segment(3)=='enew'  || isset($roles) && $roles==2){
+  $add_label_account='New Editor';
+  }
+  if($this->uri->segment(2)=='people_member' || $this->uri->segment(2)=='edit_people_member' || $this->uri->segment(3)=='mnew'  || isset($roles) && $roles==3){
+  $add_label_account='New Member';
+  }
+  ?>
+  <ul class="cardsBox">
+  <?php if($this->uri->segment(2)!='people_me' && $this->uri->segment(2)!='edit_people_me' && !isset($me)){ ?>
+
+  <?php if($this->uri->segment(2)=='edit_people_administrator' || $this->uri->segment(2)=='select_account_administrator'){?> 
+  <a href="<?php echo base_url(); ?>people_user_controller/people_add/anew">
+
+  <?php } ?>
+  <?php if($this->uri->segment(2)=='edit_people_editor' || $this->uri->segment(2)=='select_account_editor'){?> 
+  <a href="<?php echo base_url(); ?>people_user_controller/people_add/enew">
+  <?php } ?>
+  <?php if($this->uri->segment(2)=='edit_people_member' || $this->uri->segment(2)=='select_account_member'){?> 
+  <a href="<?php echo base_url(); ?>people_user_controller/people_add/mnew">
+  <?php } ?>
+  <li id="new_account">
+  <div class="plusSign">+</div>
+  <div class="plusSignText"><?php echo $add_label_account; ?></div>
+
+  </li>
+  </a>
+  <?php }?> 
+
+  <?php
+  $goto_url=''; 
+  foreach($listing_data as $row){
+  if($this->uri->segment(2)=='people_administrator' || $this->uri->segment(3)=='anew' || isset($roles) && $roles==1 || $this->uri->segment(2)=='edit_people_administrator' || $this->uri->segment(2)=='select_account_administrator'){
+  $goto_url= base_url()."people_user_controller/edit_people_administrator/".$row->user_id;
+  }
+  if($this->uri->segment(2)=='people_editor' || $this->uri->segment(3)=='enew' || isset($roles) && $roles==2 || $this->uri->segment(2)=='edit_people_editor' || $this->uri->segment(2)=='select_account_editor'){
+  $goto_url= base_url()."people_user_controller/edit_people_editor/".$row->user_id; 
+  }
+  if($this->uri->segment(2)=='people_member' || $this->uri->segment(3)=='mnew'  || isset($roles) && $roles==3 || $this->uri->segment(2)=='edit_people_member' || $this->uri->segment(2)=='select_account_member'){
+  $goto_url= base_url()."people_user_controller/edit_people_member/".$row->user_id;
+  } 
+  if($this->uri->segment(2)=='people_me' || isset($me) && $me=='people_me'){
+  $goto_url= base_url()."people_user_controller/edit_people_me/".$row->user_id;
+  } ?>
+
+
+
+  <li <?php if($row->user_id==$this->uri->segment(3)) {?> class="selected" <?php } ?>>
+  <div class="pill" <?php if($row->user_profile_image!=''){?>style="background-image: url('<?php echo base_url(); ?>assets/img/people/<?php echo $row->user_profile_image; ?>')"<?php }else{?>style="background-image: url('<?php echo base_url(); ?>assets/img/people/apple.jpg')"<?php } ?>>&nbsp;</div>                            <p class="label"><?php echo  $row->user_first_name.' '.$row->user_last_name;?></p>
+
+  <p class="options"><span id="setting_id"><?php echo "<a  href=".$goto_url.">Settings</a>
+  "; ?></span><span class="pipe">|</span>
+  <!--  <p class="options"><span>-->
+  <?php 
+  $url_manage_user='';
+  if($this->uri->segment(2)=='people_member' || $this->uri->segment(2)=='select_account_member'){
+  $url_manage_user=base_url()."manage_user_controller/select_account_member/".$row->user_id;
+  }
+  if($this->uri->segment(2)=='people_administrator' || $this->uri->segment(2)=='select_account_administrator'){
+  $url_manage_user=base_url()."manage_user_controller/select_account_administrator/".$row->user_id;
+  }
+  if($this->uri->segment(2)=='people_editor' || $this->uri->segment(2)=='select_account_editor'){
+  $url_manage_user=base_url()."manage_user_controller/select_account_editor/".$row->user_id;
+  }
+  ?>
+  <span><?php  echo "<a  href=".$url_manage_user.">Accounts</a>"; ?></span></p>
+
+  <?php if($row->user_status==1) {?>
+  <div class="status statusGreen"></div>
+  <?php } else
+  { ?>
+  <div class="status statusRed"></div>
+  <?php } ?>
+  </li>
+
+  <?php } ?>    
+  </ul>
+
+
+
+  </div>
+
+  <div id="trigger" class="mobileTriggerButton"></div>
+
+  </nav>
+  <!-- /mp-menu -->
+    <div class="scroller"><!-- this is for emulating position fixed of the nav -->
+      <div class="scroller-inner">
+      <!-- site content goes here -->
+
+      <?php $this->load->view('templates/admin/header'); ?>
+
+      <main id="contentContainer">                  
+      <div class="row">
+      <div id="splitPaneLeft" class="col span_8">
+      <?php if($this->uri->segment(2)!='people_me' && $this->uri->segment(2)!='edit_people_me'){ ?>
+      <form action="<?php echo base_url(); ?>people_user_controller/poeple_search" method="post" name="search_form" id="search_form">
+      <ul class="leftPaneFilters">
+
+
+      <li id="searchButtonLI">
+      <?php
+      $search_in='';
+      if($this->uri->segment(2)=='people_administrator' || $this->uri->segment(2)=='edit_people_administrator' || $this->uri->segment(3)=='anew' || isset($roles) && $roles==1){
+      $search_in='administrator';
+      }
+      if($this->uri->segment(2)=='people_editor' || $this->uri->segment(2)=='edit_people_editor' || $this->uri->segment(3)=='enew' || isset($roles) && $roles==2){
+      $search_in='editor';
+      }
+      if($this->uri->segment(2)=='people_member' || $this->uri->segment(2)=='edit_people_member' || $this->uri->segment(3)=='mnew' || isset($roles) && $roles==3){
+      $search_in='member';
+      }
+      ?>
+      <input type="hidden" name="hidden_val_people" value="<?php echo $search_in; ?>"  />
+      <input type="text" placeholder="Search" name="txt_search" value="<?php if(isset($search_field_value) && $search_field_value!=''){echo $search_field_value;} ?>"/>
+      <button id="searchButton" type="submit" name="searchButton" value=""></button>
+
+      </li>
+      <li>
+      <select onchange="submit_change_val(this.value)" name="lst_filter">
+      <option value="2" <?php if(isset($search_var) && $search_var=='2'){echo "selected=selected";}?>>All</option>
+      <option value="1" <?php if(isset($search_var) && $search_var==1){echo "selected=selected";} ?>>Active</option>
+      <option value="0" <?php if(isset($search_var) && $search_var==0){echo "selected=selected";} ?>>Paused</option>
+      </select>
+      <input type="hidden" id="user_id" value="<?php echo $this->uri->segment(3); ?>" />
+      </li>
+
+      <li>
+      <?php if($this->uri->segment(2)=='people_administrator' || $this->uri->segment(2)=='edit_people_administrator' || $this->uri->segment(3)=='anew'  || isset($roles) && $roles==1){?>
+      <a href="<?php echo base_url(); ?>people_user_controller/all_administrator">
+      <?php } ?>
+      <?php if($this->uri->segment(2)=='people_editor' || $this->uri->segment(2)=='edit_people_editor' || $this->uri->segment(3)=='enew'  || isset($roles) && $roles==2){?>
+      <a href="<?php echo base_url(); ?>people_user_controller/all_editor">
+      <?php } ?>
+      <?php if($this->uri->segment(2)=='people_member' || $this->uri->segment(2)=='edit_people_member' || $this->uri->segment(3)=='mnew'  || isset($roles) && $roles==3){?>
+      <a href="<?php echo base_url(); ?>people_user_controller/all_member">
+      <?php } ?>
+
+      <button type="button" />View All</button></a></li>
+      </ul>
+      </form>
+      <?php } ?>
+
+      <div class="leftPaneFiltersDetails">
+      <?php if(isset($listing_data)){ ?>
+      <?php if($this->uri->segment(2)=='select_account_administrator'){ ?>
+      <p><?php echo count($listing_data);?> Administrators, Displaying 1-<?php echo count($listing_data);?></p>
+      <?php } ?>
+      <?php if($this->uri->segment(2)=='select_account_editor'){ ?>
+      <p><?php echo count($listing_data);?> Editors, Displaying 1-<?php echo count($listing_data);?></p>
+      <?php } ?>
+
+      <?php if($this->uri->segment(2)=='select_account_member'){ ?>
+      <p><?php echo count($listing_data);?> Members, Displaying 1-<?php echo count($listing_data);?></p>
+      <?php } ?>
+      <?php if($this->uri->segment(2)=='people_me' || $this->uri->segment(2)=='edit_people_me'){ ?>
+      <p>      Me, Displaying</p>
+      <?php } ?>
+      <?php } ?>
+      </div>
+      <?php 
+      $add_label_account = '';
+      if($this->uri->segment(2)=='people_administrator' || $this->uri->segment(2)=='edit_people_administrator' || $this->uri->segment(3)=='anew'  || isset($roles) && $roles==1 || $this->uri->segment(2)=='select_account_administrator'){
+      $add_label_account='New Administrator';
+      }
+      if($this->uri->segment(2)=='people_editor' || $this->uri->segment(2)=='edit_people_editor' || $this->uri->segment(3)=='enew'  || isset($roles) && $roles==2 || $this->uri->segment(2)=='select_account_editor'){
+      $add_label_account='New Editor';
+      }
+      if($this->uri->segment(2)=='people_member' || $this->uri->segment(2)=='edit_people_member' || $this->uri->segment(3)=='mnew'  || isset($roles) && $roles==3 || $this->uri->segment(2)=='select_account_member'){
+      $add_label_account='New Member';
+      }
+      ?>
+      <ul class="cardsBox">
+      <?php if($this->uri->segment(2)!='people_me' && $this->uri->segment(2)!='edit_people_me' && !isset($me)){ ?>
+
+      <?php if($this->uri->segment(2)=='edit_people_administrator' || $this->uri->segment(2)=='select_account_administrator'){?> 
+      <a href="<?php echo base_url(); ?>people_user_controller/people_add/anew">
+
+      <?php } ?>
+      <?php if($this->uri->segment(2)=='edit_people_editor' || $this->uri->segment(2)=='select_account_editor'){?> 
+      <a href="<?php echo base_url(); ?>people_user_controller/people_add/enew">
+      <?php } ?>
+      <?php if($this->uri->segment(2)=='edit_people_member' || $this->uri->segment(2)=='select_account_member'){?> 
+      <a href="<?php echo base_url(); ?>people_user_controller/people_add/mnew">
+      <?php } ?>
+      <li id="new_account">
+      <div class="plusSign">+</div>
+      <div class="plusSignText"><?php echo $add_label_account; ?></div>
+
+      </li>
+      </a>
+      <?php }?> 
+
+      <?php
+      $goto_url=''; 
+      foreach($listing_data as $row){
+      if($this->uri->segment(2)=='people_administrator' || $this->uri->segment(3)=='anew' || isset($roles) && $roles==1 || $this->uri->segment(2)=='edit_people_administrator' || $this->uri->segment(2)=='select_account_administrator'){
+      $goto_url= base_url()."people_user_controller/edit_people_administrator/".$row->user_id;
+      }
+      if($this->uri->segment(2)=='people_editor' || $this->uri->segment(3)=='enew' || isset($roles) && $roles==2 || $this->uri->segment(2)=='edit_people_editor' || $this->uri->segment(2)=='select_account_editor'){
+      $goto_url= base_url()."people_user_controller/edit_people_editor/".$row->user_id; 
+      }
+      if($this->uri->segment(2)=='people_member' || $this->uri->segment(3)=='mnew'  || isset($roles) && $roles==3 || $this->uri->segment(2)=='edit_people_member' || $this->uri->segment(2)=='select_account_member'){
+      $goto_url= base_url()."people_user_controller/edit_people_member/".$row->user_id;
+      } 
+      if($this->uri->segment(2)=='people_me' || isset($me) && $me=='people_me'){
+      $goto_url= base_url()."people_user_controller/edit_people_me/".$row->user_id;
+      } ?>
+
+
+
+      <li <?php if($row->user_id==$this->uri->segment(3)) {?> class="selected" <?php } ?>>
+      <div class="pill" <?php if($row->user_profile_image!=''){?>style="background-image: url('<?php echo base_url(); ?>assets/img/people/<?php echo $row->user_profile_image; ?>')"<?php }else{?>style="background-image: url('<?php echo base_url(); ?>assets/img/people/apple.jpg')"<?php } ?>>&nbsp;</div>                            <p class="label"><?php echo  $row->user_first_name.' '.$row->user_last_name;?></p>
+
+      <p class="options"><span id="setting_id"><?php echo "<a  href=".$goto_url.">Settings</a>
+      "; ?></span><span class="pipe">|</span>
+      <!--  <p class="options"><span>-->
+      <?php 
+      $url_manage_user='';
+      if($this->uri->segment(2)=='people_member' || $this->uri->segment(2)=='select_account_member'){
+      $url_manage_user=base_url()."manage_user_controller/select_account_member/".$row->user_id;
+      }
+      if($this->uri->segment(2)=='people_administrator' || $this->uri->segment(2)=='select_account_administrator'){
+      $url_manage_user=base_url()."manage_user_controller/select_account_administrator/".$row->user_id;
+      }
+      if($this->uri->segment(2)=='people_editor' || $this->uri->segment(2)=='select_account_editor'){
+      $url_manage_user=base_url()."manage_user_controller/select_account_editor/".$row->user_id;
+      }
+      ?>
+      <span><?php  echo "<a  href=".$url_manage_user.">Accounts</a>"; ?></span></p>
+
+      <?php if($row->user_status==1) {?>
+      <div class="status statusGreen"></div>
+      <?php } else
+      { ?>
+      <div class="status statusRed"></div>
+      <?php } ?>
+      </li>
+
+      <?php } ?>     
+      </ul>
+
+      <!-- <div class="leftPaneFiltersDetails">
+      <p><a href="#">Load More</a></p>
+      </div>-->
+
+      </div>
+      <!-- END OF splitPaneLeft -->
+
+
+      <div class="col span_8" id="splitPaneRight">
+
+      <?php
+        if(isset($error) && $error!=''){
+          echo '<div style="color:red;margin:10px 0 0 10px;font-weight:bold;font-size:20px">'.$error.'</div>';
+        }
+        # show $title (admin name) if set, otherwise do not show anything
+        if(isset($title)){echo "<h2>$title</h2>"; }
+       ?>
+
+        <div class="splitPaneRightRow splitPaneRightSelected" id="edit_role">
+          <h3 onclick="showSplitPlaneRow(this);" id="form_act_id">Accounts</h3>
+          <div class="splitPlaneQuickDetails" style="display: none;">
+            <?php echo $this->session->userdata('account_title');?>
+          </div>
+          <ul class="splitPaneRightDetails" style="display: block;">
+            <!-- Show Current Account Access -->
+            <form method="post" id="account_role_form" 
+                  action="<?php echo base_url()?>manage_user_controller/update_account_user_role">
+              <li class="row">
+                <input type="hidden" id="hidden_user_id" name="hidden_user_id" 
+                       value="<?php echo $this->uri->segment(3); ?>" />
+                <?php 
+                  global $roles_assigned;
+                  $i=1;
+
+                  foreach($main_account_data as $data_main){
+                    if(isset($account_data) && $account_data!='false') { ?>
+                      <div class="formInfo col span_6">
+                        <input type="text" id="account_readonly_title" 
+                              value="<?php echo $data_main->account_title; ?>" 
+                              readonly="readonly">
+                      </div>
                     <?php } ?>
-		                    </div>
-                    
-                	 <?php 
-							$add_label_account = '';
-							if($this->uri->segment(2)=='people_administrator' || $this->uri->segment(2)=='edit_people_administrator' || $this->uri->segment(3)=='anew'  || isset($roles) && $roles==1){
-							$add_label_account='New Administrator';
-							}
-							if($this->uri->segment(2)=='people_editor' || $this->uri->segment(2)=='edit_people_editor' || $this->uri->segment(3)=='enew'  || isset($roles) && $roles==2){
-							$add_label_account='New Editor';
-							}
-							if($this->uri->segment(2)=='people_member' || $this->uri->segment(2)=='edit_people_member' || $this->uri->segment(3)=='mnew'  || isset($roles) && $roles==3){
-							$add_label_account='New Member';
-							}
-							 ?>
-		                	<ul class="cardsBox">
-                            <?php if($this->uri->segment(2)!='people_me' && $this->uri->segment(2)!='edit_people_me' && !isset($me)){ ?>
-							   
-                                    <?php if($this->uri->segment(2)=='edit_people_administrator' || $this->uri->segment(2)=='select_account_administrator'){?> 
-	                             	<a href="<?php echo base_url(); ?>people_user_controller/people_add/anew">
-                                    
-                                    <?php } ?>
-                                    <?php if($this->uri->segment(2)=='edit_people_editor' || $this->uri->segment(2)=='select_account_editor'){?> 
-	                             	<a href="<?php echo base_url(); ?>people_user_controller/people_add/enew">
-                                    <?php } ?>
-                                    <?php if($this->uri->segment(2)=='edit_people_member' || $this->uri->segment(2)=='select_account_member'){?> 
-	                             	<a href="<?php echo base_url(); ?>people_user_controller/people_add/mnew">
-                                    <?php } ?>
-							     <li id="new_account">
-                                 	<div class="plusSign">+</div>
-                                    <div class="plusSignText"><?php echo $add_label_account; ?></div>
-                                   
-                                </li>
-                                </a>
-                              <?php }?> 
-        
-<?php
-								  $goto_url=''; 
-								 foreach($listing_data as $row){
-     if($this->uri->segment(2)=='people_administrator' || $this->uri->segment(3)=='anew' || isset($roles) && $roles==1 || $this->uri->segment(2)=='edit_people_administrator' || $this->uri->segment(2)=='select_account_administrator'){
-                                 $goto_url= base_url()."people_user_controller/edit_people_administrator/".$row->user_id;
-                               }
-         if($this->uri->segment(2)=='people_editor' || $this->uri->segment(3)=='enew' || isset($roles) && $roles==2 || $this->uri->segment(2)=='edit_people_editor' || $this->uri->segment(2)=='select_account_editor'){
-                                 $goto_url= base_url()."people_user_controller/edit_people_editor/".$row->user_id; 
-                                  }
-         if($this->uri->segment(2)=='people_member' || $this->uri->segment(3)=='mnew'  || isset($roles) && $roles==3 || $this->uri->segment(2)=='edit_people_member' || $this->uri->segment(2)=='select_account_member'){
-                                 $goto_url= base_url()."people_user_controller/edit_people_member/".$row->user_id;
-                                  } 
-         if($this->uri->segment(2)=='people_me' || isset($me) && $me=='people_me'){
-                                 $goto_url= base_url()."people_user_controller/edit_people_me/".$row->user_id;
-                                 } ?>
-                                 
-                                
-                                 
-                                  <li <?php if($row->user_id==$this->uri->segment(3)) {?> class="selected" <?php } ?>>
-								<div class="pill" <?php if($row->user_profile_image!=''){?>style="background-image: url('<?php echo base_url(); ?>assets/img/people/<?php echo $row->user_profile_image; ?>')"<?php }else{?>style="background-image: url('<?php echo base_url(); ?>assets/img/people/apple.jpg')"<?php } ?>>&nbsp;</div>                            <p class="label"><?php echo  $row->user_first_name.' '.$row->user_last_name;?></p>
-                             
-                                    <p class="options"><span id="setting_id"><?php echo "<a  href=".$goto_url.">Settings</a>
-									"; ?></span><span class="pipe">|</span>
-                                  <!--  <p class="options"><span>-->
-                                  <?php 
-								  $url_manage_user='';
-								 if($this->uri->segment(2)=='people_member' || $this->uri->segment(2)=='select_account_member'){
-								      $url_manage_user=base_url()."manage_user_controller/select_account_member/".$row->user_id;
-								  }
-								  if($this->uri->segment(2)=='people_administrator' || $this->uri->segment(2)=='select_account_administrator'){
-								      $url_manage_user=base_url()."manage_user_controller/select_account_administrator/".$row->user_id;
-								  }
-								  if($this->uri->segment(2)=='people_editor' || $this->uri->segment(2)=='select_account_editor'){
-								      $url_manage_user=base_url()."manage_user_controller/select_account_editor/".$row->user_id;
-								  }
-									 ?>
-                                    <span><?php  echo "<a  href=".$url_manage_user.">Accounts</a>"; ?></span></p>
-                                    
-                           <?php if($row->user_status==1) {?>
-                                   <div class="status statusGreen"></div>
-                                   <?php } else
-								   { ?>
-                                   <div class="status statusRed"></div>
-                                  <?php } ?>
-                        </li>
-         
-                           <?php } ?>    
-							</ul>
-					
-                    
-
-            </div>
-            
-            <div id="trigger" class="mobileTriggerButton"></div>
-
-        </nav>
-        <!-- /mp-menu -->
-		
-
-
-        <div class="scroller"><!-- this is for emulating position fixed of the nav -->
-            <div class="scroller-inner">
-                <!-- site content goes here -->
-                
-
-
-				<?php $this->load->view('templates/admin/header'); ?>
-        
-                <main id="contentContainer">                  
-                    <div class="row">
-                        <div id="splitPaneLeft" class="col span_8">
-                        <?php if($this->uri->segment(2)!='people_me' && $this->uri->segment(2)!='edit_people_me'){ ?>
-                            <form action="<?php echo base_url(); ?>people_user_controller/poeple_search" method="post" name="search_form" id="search_form">
-                            <ul class="leftPaneFilters">
-                                
-                               
-                               <li id="searchButtonLI">
-                               <?php
-							   $search_in='';
-							   if($this->uri->segment(2)=='people_administrator' || $this->uri->segment(2)=='edit_people_administrator' || $this->uri->segment(3)=='anew' || isset($roles) && $roles==1){
-							    $search_in='administrator';
-							   }
-							   if($this->uri->segment(2)=='people_editor' || $this->uri->segment(2)=='edit_people_editor' || $this->uri->segment(3)=='enew' || isset($roles) && $roles==2){
-							    $search_in='editor';
-							   }
-							   if($this->uri->segment(2)=='people_member' || $this->uri->segment(2)=='edit_people_member' || $this->uri->segment(3)=='mnew' || isset($roles) && $roles==3){
-							    $search_in='member';
-							   }
-							   ?>
-                               <input type="hidden" name="hidden_val_people" value="<?php echo $search_in; ?>"  />
-                                <input type="text" placeholder="Search" name="txt_search" value="<?php if(isset($search_field_value) && $search_field_value!=''){echo $search_field_value;} ?>"/>
-                                <button id="searchButton" type="submit" name="searchButton" value=""></button>
-                                
-                               </li>
-                                <li>
-                                    <select onchange="submit_change_val(this.value)" name="lst_filter">
-                                        <option value="2" <?php if(isset($search_var) && $search_var=='2'){echo "selected=selected";}?>>All</option>
-                                        <option value="1" <?php if(isset($search_var) && $search_var==1){echo "selected=selected";} ?>>Active</option>
-                                        <option value="0" <?php if(isset($search_var) && $search_var==0){echo "selected=selected";} ?>>Paused</option>
-                                    </select>
-                                    <input type="hidden" id="user_id" value="<?php echo $this->uri->segment(3); ?>" />
-                               </li>
-                                
-                                <li>
-                                <?php if($this->uri->segment(2)=='people_administrator' || $this->uri->segment(2)=='edit_people_administrator' || $this->uri->segment(3)=='anew'  || isset($roles) && $roles==1){?>
-                                <a href="<?php echo base_url(); ?>people_user_controller/all_administrator">
-                                <?php } ?>
-                                 <?php if($this->uri->segment(2)=='people_editor' || $this->uri->segment(2)=='edit_people_editor' || $this->uri->segment(3)=='enew'  || isset($roles) && $roles==2){?>
-                                <a href="<?php echo base_url(); ?>people_user_controller/all_editor">
-                                <?php } ?>
-                                 <?php if($this->uri->segment(2)=='people_member' || $this->uri->segment(2)=='edit_people_member' || $this->uri->segment(3)=='mnew'  || isset($roles) && $roles==3){?>
-                                <a href="<?php echo base_url(); ?>people_user_controller/all_member">
-                                <?php } ?>
-                                
-                                <button type="button" />View All</button></a></li>
-                            </ul>
-                            </form>
-                            <?php } ?>
-                            
-		                      <div class="leftPaneFiltersDetails">
-		                    	 <?php if(isset($listing_data)){ ?>
-                                 <?php if($this->uri->segment(2)=='select_account_administrator'){ ?>
-                    	<p><?php echo count($listing_data);?> Administrators, Displaying 1-<?php echo count($listing_data);?></p>
-                                 <?php } ?>
-                                 <?php if($this->uri->segment(2)=='select_account_editor'){ ?>
-                    	<p><?php echo count($listing_data);?> Editors, Displaying 1-<?php echo count($listing_data);?></p>
-                                 <?php } ?>
-                                 
-                                 <?php if($this->uri->segment(2)=='select_account_member'){ ?>
-                    	<p><?php echo count($listing_data);?> Members, Displaying 1-<?php echo count($listing_data);?></p>
-                                 <?php } ?>
-                                 <?php if($this->uri->segment(2)=='people_me' || $this->uri->segment(2)=='edit_people_me'){ ?>
-                    	<p>      Me, Displaying</p>
-                                 <?php } ?>
-                    <?php } ?>
-		                    </div>
-		                    <?php 
-							$add_label_account = '';
-							if($this->uri->segment(2)=='people_administrator' || $this->uri->segment(2)=='edit_people_administrator' || $this->uri->segment(3)=='anew'  || isset($roles) && $roles==1 || $this->uri->segment(2)=='select_account_administrator'){
-							$add_label_account='New Administrator';
-							}
-							if($this->uri->segment(2)=='people_editor' || $this->uri->segment(2)=='edit_people_editor' || $this->uri->segment(3)=='enew'  || isset($roles) && $roles==2 || $this->uri->segment(2)=='select_account_editor'){
-							$add_label_account='New Editor';
-							}
-							if($this->uri->segment(2)=='people_member' || $this->uri->segment(2)=='edit_people_member' || $this->uri->segment(3)=='mnew'  || isset($roles) && $roles==3 || $this->uri->segment(2)=='select_account_member'){
-							$add_label_account='New Member';
-							}
-							 ?>
-		                	<ul class="cardsBox">
-                           <?php if($this->uri->segment(2)!='people_me' && $this->uri->segment(2)!='edit_people_me' && !isset($me)){ ?>
-							   
-                                    <?php if($this->uri->segment(2)=='edit_people_administrator' || $this->uri->segment(2)=='select_account_administrator'){?> 
-	                             	<a href="<?php echo base_url(); ?>people_user_controller/people_add/anew">
-                                    
-                                    <?php } ?>
-                                    <?php if($this->uri->segment(2)=='edit_people_editor' || $this->uri->segment(2)=='select_account_editor'){?> 
-	                             	<a href="<?php echo base_url(); ?>people_user_controller/people_add/enew">
-                                    <?php } ?>
-                                    <?php if($this->uri->segment(2)=='edit_people_member' || $this->uri->segment(2)=='select_account_member'){?> 
-	                             	<a href="<?php echo base_url(); ?>people_user_controller/people_add/mnew">
-                                    <?php } ?>
-							     <li id="new_account">
-                                 	<div class="plusSign">+</div>
-                                    <div class="plusSignText"><?php echo $add_label_account; ?></div>
-                                   
-                                </li>
-                                </a>
-                              <?php }?> 
-        
-<?php
-								  $goto_url=''; 
-								 foreach($listing_data as $row){
-     if($this->uri->segment(2)=='people_administrator' || $this->uri->segment(3)=='anew' || isset($roles) && $roles==1 || $this->uri->segment(2)=='edit_people_administrator' || $this->uri->segment(2)=='select_account_administrator'){
-                                 $goto_url= base_url()."people_user_controller/edit_people_administrator/".$row->user_id;
-                               }
-         if($this->uri->segment(2)=='people_editor' || $this->uri->segment(3)=='enew' || isset($roles) && $roles==2 || $this->uri->segment(2)=='edit_people_editor' || $this->uri->segment(2)=='select_account_editor'){
-                                 $goto_url= base_url()."people_user_controller/edit_people_editor/".$row->user_id; 
-                                  }
-         if($this->uri->segment(2)=='people_member' || $this->uri->segment(3)=='mnew'  || isset($roles) && $roles==3 || $this->uri->segment(2)=='edit_people_member' || $this->uri->segment(2)=='select_account_member'){
-                                 $goto_url= base_url()."people_user_controller/edit_people_member/".$row->user_id;
-                                  } 
-         if($this->uri->segment(2)=='people_me' || isset($me) && $me=='people_me'){
-                                 $goto_url= base_url()."people_user_controller/edit_people_me/".$row->user_id;
-                                 } ?>
-                                 
-                                
-                                 
-                                  <li <?php if($row->user_id==$this->uri->segment(3)) {?> class="selected" <?php } ?>>
-								<div class="pill" <?php if($row->user_profile_image!=''){?>style="background-image: url('<?php echo base_url(); ?>assets/img/people/<?php echo $row->user_profile_image; ?>')"<?php }else{?>style="background-image: url('<?php echo base_url(); ?>assets/img/people/apple.jpg')"<?php } ?>>&nbsp;</div>                            <p class="label"><?php echo  $row->user_first_name.' '.$row->user_last_name;?></p>
-                             
-                                    <p class="options"><span id="setting_id"><?php echo "<a  href=".$goto_url.">Settings</a>
-									"; ?></span><span class="pipe">|</span>
-                                  <!--  <p class="options"><span>-->
-                                  <?php 
-								  $url_manage_user='';
-								  if($this->uri->segment(2)=='people_member' || $this->uri->segment(2)=='select_account_member'){
-								      $url_manage_user=base_url()."manage_user_controller/select_account_member/".$row->user_id;
-								  }
-								  if($this->uri->segment(2)=='people_administrator' || $this->uri->segment(2)=='select_account_administrator'){
-								      $url_manage_user=base_url()."manage_user_controller/select_account_administrator/".$row->user_id;
-								  }
-								  if($this->uri->segment(2)=='people_editor' || $this->uri->segment(2)=='select_account_editor'){
-								      $url_manage_user=base_url()."manage_user_controller/select_account_editor/".$row->user_id;
-								  }
-									 ?>
-                                    <span><?php  echo "<a  href=".$url_manage_user.">Accounts</a>"; ?></span></p>
-                                    
-                           <?php if($row->user_status==1) {?>
-                                   <div class="status statusGreen"></div>
-                                   <?php } else
-								   { ?>
-                                   <div class="status statusRed"></div>
-                                  <?php } ?>
-                        </li>
-         
-                           <?php } ?>     
-							</ul>
-
-		                   <!-- <div class="leftPaneFiltersDetails">
-		                    	<p><a href="#">Load More</a></p>
-		                    </div>-->
-
-                        </div>
-                        <!-- END OF splitPaneLeft -->
-   
-                        
-                        <div class="col span_8" id="splitPaneRight">
-                        
-                             <?php
-							 if(isset($error) && $error!=''){
-							 
-							 echo '<div style="color:red;margin:10px 0 0 10px;font-weight:bold;font-size:20px">'.$error.'</div>';
-							 }
-							 ?>
-                           <?php if(isset($title)){?>
-                            <h2><?php echo $title; ?></h2>
-                            <?php } ?>
-        
-                            <div class="splitPaneRightRow splitPaneRightSelected" id="edit_role">
-								<h3 onclick="showSplitPlaneRow(this);" id="form_act_id">Accounts</h3><div class="splitPlaneQuickDetails" style="display: none;">
-								<?php echo $this->session->userdata('account_title');?>
-                                </div>
-							        <ul class="splitPaneRightDetails" style="display: block;">
-							        	<!-- Show Current Account Access -->
-                                        <form method="post" id="account_role_form" action="<?php echo base_url()?>manage_user_controller/update_account_user_role">
-                                        <li class="row">
-                                        
-                                        <input type="hidden" id="hidden_user_id" name="hidden_user_id" value="<?php echo $this->uri->segment(3); ?>" />
-                                        <?php 
-										global $roles_assigned;
-										$i=1;
-										
-										foreach($main_account_data as $data_main){?>
-                                            <?php   if(isset($account_data) && $account_data!='false') { ?>
-                                           	<div class="formInfo col span_6">
-                                           		<input type="text" id="account_readonly_title" value="<?php echo $data_main->account_title; ?>" readonly="readonly">
-                                                
-                                           	</div>
-                                            <?php } ?>
-                                            <div class="formInfo col span_6">
-							                     <?php if($query[0]->is_default==1) {?>
-                                            <select id="user_role_<?php echo $i?>" name="user_role_<?php echo $i?>">
-                                                 <option <?php if($data_main->role_id==1){echo 'selected=selected';}?> value="1">Administrator</option>
-                                            </select> 
-
-<?php } else { ?>
-                                             <select id="user_role_<?php echo $i?>" name="user_role_<?php echo $i?>">
-                                             <option value="none">Select Role</option>
-                                             <?php if($this->session->userdata('role_id')=='1' && $this->session->userdata('editor_page')==''){?>
-                                                 <option <?php if($data_main->role_id==1){echo 'selected=selected';}?> value="1">Administrator</option>
-                                                <option <?php if($data_main->role_id==2){echo 'selected=selected';}?>  value="2">Editor</option>
-                                             <?php } ?>
-                                                <option <?php if($data_main->role_id==3){echo 'selected=selected';}?> value="3">Member</option>
-                                                <option <?php if($data_main->role_id==4){echo 'selected=selected';}?>  value="4">Public</option>
-                                            </select>
-                                            <?php } ?>                           
-							                </div>
-                                            
-                                             <div class="formInfo col span_4">
-							                	<button href="javascript:void(0)" id="delete_link_<?php echo $i?>" class="delete_link" id="delete_link_1">Remove</button>
-								                <button style="display:none;" href="javascript:void(0)" class="update_link" id="update_role_1">Save</button>
-							                </div>
-                                          
-                                            
-                                          <?php /*?>  <a href="javascript:void(0)" class="delete_link" id="delete_link_<?php echo $i?>" style="margin-left:10px">Delete</a> | <a href="javascript:void(0)" class="update_link" id="update_role_<?php echo $i?>">Update</a></span><?php */?>
-                                            
-                                                                     
-                                      
-                                      
-                                        <?php $i++; } ?>   
-                                    </li>
-                                    </form>
-									<li class="row">
-                                    <div class="formInfo col span_6">
-                                    <?php echo $this->session->userdata('account_title');?>
-                                    </div>
-                                    </li>
-							            <!-- Add Person to New Account -->
-                                          <?php if(count($new_account)>0){ ?>
-                                 <?php if($query[0]->is_default==0) {?>
-							            <li class="row">
-							                <div class="formInfo col span_6">
-							            		 <select id="new_user_account" name="new_user_account">
-                                            <option value="none">Select Account</option>
-                                                 <?php foreach($account_data as $account_new){ ?>
-                                                <option value="<?php echo $account_new->account_id; ?>"><?php echo $account_new->account_title; ?></option>
-                                                <?php ?>
-												<?php } ?>
-                                            </select>
-							            	</div>
-							            	<div class="formInfo col span_6">
-							                  <select id="new_user_role" class="" id="user_roles" name="user_role">
-                                               <option value="none">Select Role</option>
-                                                <?php if($this->session->userdata('role_id')=='1' && $this->session->userdata('editor_page')==''){?>
-                                                <option value="1">Administrator</option>
-                                                <option value="2">Editor</option>
-                                                <?php } ?>
-                                                <option value="3">Member</option>
-                                                <option value="4">Public</option>
-                                            </select>                               
-							                </div>
-							                <div class="formInfo col span_4">
-								                <button href="javascript:void(0)" id="save_role">Save</button>
-								                <button style="display:none;" href="javascript:void(0)" class="delete_link" id="delete_link_1">Remove</button>
-							                </div>
-							
-							            </li>
-                                        <?php }}?>
-							        </ul>
-							</div>
-                            
-                                                                               
-                            <!-- Desktop Buttons -->                    
-                            <div class="splitPaneRightRow rightButtonsRow row gutters">
-                            	<div class="col span_4">
-	                                <?php /*?><button class="remove">Remove</button><?php */?>
-                                </div>
-                                <div class="col span_4">&nbsp;</div>
-                                <div class="col span_4">
-									<button type="button" class="cancel">Cancel</button>
-                                </div>
-                                <div class="col span_4">                                    
-                                    <button type="button" id="update_role_btn" class="save">Save</button>
-                                </div>
-                            </div>
-                            
-                          
-        
-                        </div>
-        
-                </main><!-- END OF contentContainer -->
-                
-                
-                
-                
+                    <div class="formInfo col span_6">
+                      <?php if($query[0]->is_default==1) {?>
+                      <select id="user_role_<?php echo $i?>" name="user_role_<?php echo $i?>">
+                      <option <?php if($data_main->role_id==1){echo 'selected=selected'; }?> 
+                        value="1">Administrator</option>
+                      </select> 
+                      <?php } else { ?>
+                        <select id="user_role_<?php echo $i?>" name="user_role_<?php echo $i?>">
+                        <option value="none">Select Role</option>
+                        <?php if($this->session->userdata('role_id')=='1' && 
+                                $this->session->userdata('editor_page')==''){?>
+                          <option <?php if($data_main->role_id==1){echo 'selected=selected';}?> 
+                            value="1">Administrator</option>
+                          <option <?php if($data_main->role_id==2){echo 'selected=selected';}?>  
+                            value="2">Editor</option>
+                        <?php } ?>
+                        <option <?php if($data_main->role_id==3){echo 'selected=selected';}?> 
+                          value="3">Member</option>
+                        <option <?php if($data_main->role_id==4){echo 'selected=selected';}?>  
+                          value="4">Public</option>
+                        </select>
+                      <?php } ?>                           
+                    </div>
+                <div class="formInfo col span_4">
+                <button href="javascript:void(0)" id="delete_link_<?php echo $i?>" 
+                        class="delete_link" id="delete_link_1">Remove</button>
+                <button style="display:none;" href="javascript:void(0)" 
+                        class="update_link" id="update_role_1">Save</button>
                 </div>
-            </div><!-- /scroller-inner -->
-        </div><!-- /scroller -->
+                <?php $i++; } ?>   
+              </li>
+            </form>
+            
+            <!-- Add Person to New Account -->
 
-        
-    </div><!-- /pusher -->
+          </ul>
+        </div>
+
+        <!-- Desktop Buttons -->                    
+        <div class="splitPaneRightRow rightButtonsRow row gutters">
+          <div class="col span_4">
+            <?php /*?><button class="remove">Remove</button><?php */?>
+          </div>
+          <div class="col span_4">&nbsp;</div>
+          <div class="col span_4">
+            <button type="button" class="cancel">Cancel</button>
+          </div>
+          <div class="col span_4">                                    
+            <button type="button" id="update_role_btn" class="save">Save</button>
+          </div>
+        </div>
+      </div>
+      </main><!-- END OF contentContainer -->
+      </div>
+    </div>
+  </div>
+</div>
 </div>
 <script>
 function submit_change_val(select_value){
-$('#selected_value').val(select_value);
-$('#search_form').submit();
+  $('#selected_value').val(select_value);
+  $('#search_form').submit();
 }
 
 function user_view(value)
