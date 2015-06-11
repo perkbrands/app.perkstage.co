@@ -591,6 +591,7 @@
                             </div>
 <!-- Tags -->                            
                             <div class="splitPaneRightRow" >
+                                <!-- Test commit: problem here? -->
                                 <h3  onclick="showSplitPlaneRow(this);">Tags</h3>
                                  <?php if(isset($query[0]->user_tags_tags)){
 								$tag_user = rtrim($query[0]->user_tags_tags,',');
