@@ -443,14 +443,21 @@
                                         <?php $i++; } ?>   
                                     </li>
                                     </form>
-									<li class="row">
-                                    <div class="formInfo col span_6">
-                                    <?php echo $this->session->userdata('account_title');?>
-                                    </div>
-                                    </li>
-							            <!-- Add Person to New Account -->
-                                          <?php if(count($new_account)>0){ ?>
-                                 <?php if($query[0]->is_default==0) {?>
+
+							          <!-- Add Person to New Account
+                                      <!-- If _ci_models[0] = "manage_user_model", then we do not 
+                                      <!-- want to see the option to assign account owner again
+                                      <!-- unsure if this is used in another context which is why
+                                      <!-- the conditional was added instead of just removing the
+                                      <!-- code entirely.
+                                      <?php   if (!($this->_ci_models[0] == "manage_user_model")) { 
+                                          if(count($new_account)>0){ ?>
+                                 <?php if($query[0]->is_default==0) {?>									
+                                    <li class="row">
+                                <div class="formInfo col span_6">
+                                <?php echo $this->session->userdata('account_title');?>
+                                </div>
+                                </li>
 							            <li class="row">
 							                <div class="formInfo col span_6">
 							            		 <select id="new_user_account" name="new_user_account">
@@ -478,7 +485,7 @@
 							                </div>
 							
 							            </li>
-                                        <?php }}?>
+                                 <?php }}}?>
 							        </ul>
 							</div>
                             
