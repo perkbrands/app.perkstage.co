@@ -434,8 +434,43 @@
                             <h2 class="edit" id="edit"><?php echo $query[0]->user_first_name.' '.$query[0]->user_last_name; ?></h2>
                             <input type="hidden" id="people_id" name="people_id" value="<?php echo $query[0]->user_id; ?>" />
                             <?php } ?>
-                       <form action="<?php echo base_url(); ?>people_user_controller/people_add" enctype="multipart/form-data" method="post" id="my_form" <?php if(isset($query) && $query!='') { ?>  style="display:block;" <?php }else { ?> style="display:none;" <?php } ?>>
-<!-- Status -->                       
+                   <form action="<?php echo base_url(); ?>people_user_controller/people_add" enctype="multipart/form-data" method="post" id="my_form" <?php if(isset($query) && $query!='') { ?>  style="display:block;" <?php }else { ?> style="display:none;" <?php } ?>>
+                        
+                      <!-- User Account Nickname -->                            
+                      <div class="splitPaneRightRow ">
+                        <h3 onclick="showSplitPlaneRow(this);">Nickname</h3>
+                        <div class="splitPlaneQuickDetails" id="form_aud_id">
+                          <?php
+                            /* Check to see if a nickname is already associated with this
+                             * user ($query[0] results are basically user information.  
+                             * For display purposes, also check to make sure it is not
+                             * equal to '' (or NULL) since that is what the result of 
+                             * the query will be even if there isn't any data in the field.
+                             * DAK
+                             */
+                            if(isset($query[0]->user_nickname) && !($query[0]->user_nickname=='')){ 
+                              echo ($query[0]->user_nickname);
+                            } else {
+                              echo 'Expand to set account nickname';
+                            }
+                           ?>
+                        </div>
+                        <ul class="splitPaneRightDetails ">
+                          <li class="row">
+                          <div class="labelInfo col span_4">Nickname:</div>
+                            <div class="formInfo col span_12">
+                              <input type="text" name="nickname" 
+                                   value="<?php if(isset($query[0]->user_nickname)){ echo ($query[0]->user_nickname);}
+                                           else{echo 'User account nickname';}
+                                           ?>" 
+                                   id="nickname_id" />
+                              <span class="required" id="nickname_error"></span>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                
+                         <!-- Status -->                       
 
 							<?php
 							$edit_hidden_value='';
