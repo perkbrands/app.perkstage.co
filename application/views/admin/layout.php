@@ -16,16 +16,21 @@
 <!--[if lte IE 8]>
 	<link rel="stylesheet" type="text/css" href="/css/ie8lte.css"/>
 <![endif]-->
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/jquery-ui.min.js"></script>
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/jquery-ui.min.js"></script>
 <script type="text/javascript" src="<?php echo base_url() ?>assets/js/admin/jquery.js"></script> 
-<script src="<?php echo base_url() ?>assets/js/admin/mlpmenu/modernizr.custom.js"></script>
+<script type="text/javascript" src="<?php echo base_url() ?>assets/js/admin/mlpmenu/modernizr.custom.js"></script>
 			<!-- DropDown  Jq -->
 
 <script type="text/javascript" src="<?php echo base_url() ?>assets/js/admin/ui.core.js"></script>
 <script type="text/javascript" src="<?php echo base_url() ?>assets/js/admin/ui.dropdownchecklist.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
+            // THIS NEXT LINE SHOULD NOT WORK BUT IT DOES ???  The actual #remove_btn function around line 400
+            // was not firing.  Just put this click function up here to see if an alert window would pop up.
+            // The alert window did not pop but the function works.  Since this makes absolutely no sense, I'm
+            // leaving it in place and hopefully all of this javascript crap will be rewritten soon.
+            $('#remove_btn').click(function(){ alert 'ALERTING'; });
             $("#s4").dropdownchecklist({ firstItemChecksAll: true,maxDropHeight: 120,width:320 });
         });
     </script>
@@ -227,8 +232,8 @@
                               </div>
                               <?php } ?>
                             
-        <form method="post" action="<?php echo base_url()?>layout_controller/add_layout" id="my_form" <?php  if(isset($query) && $query!='') { ?>  style="display:block;" <?php }else { ?> style="display:none;" <?php }  ?> enctype="multipart/form-data">
-               		<?php if(!isset($query)){?>
+        <form method="post" action="<?php echo base_url()?>layout_controller/add_layout" id="my_form" <?php  if(isset($query) && $query!='') { ?>  style="display:block;" <?php }else { ?> style="display:none;" <?php }  ?> enctype="multipart/form-data">		
+            <?php if(!isset($query)){?>
                         <div style="float:left;margin:5px 0 20px 10px;width:90%">
                         <div class="labelInfo col span_4" style="color:#00A3E8" id="error_title">Layout Title</div>
                         <input style="width: 100%; height: 44px;" autocomplete="off" name="txt_layout_title" id="collection_title_id" onkeyup="collectin_title(this.value)">
@@ -375,7 +380,7 @@
 
         
     </div><!-- /pusher -->
-</div>
+
 
 <script type="text/javascript">
 function submit_change_val(select_value){
@@ -419,6 +424,27 @@ $(document).ready(function() {
 		return false;
 	}
 	});
+    $('#remove_btn').attr("type", "button");
+    $('.edit').editable('<?php echo base_url()?>ajax/update_ajax_layout', {
+       id : 'elementid',
+       indicator : 'Saving...',
+       submitdata : {layout_id: $('#layout_id').val()},
+       tooltip   : 'Click to edit...',
+       cancel : 'Cancel',
+       submit  : 'Save',
+       onblur : 'ignore'
+   });
+
+  $('#remove_btn').click(function(e){
+    var r = confirm("Are you sure you want to delete");
+    if (r == true) {
+        var del_id=$('#hidden_layout_id').val();
+
+        window.location.href='<?php echo base_url() ?>layout_controller/layout_delete/'+del_id;
+    } else {
+
+    }
+  });
 });	
 
 function card_expand()
@@ -450,11 +476,12 @@ function card_expand()
 }
 
 </script>
-<script>
+<script type="text/javascript">
 function titletext(value)
 {
-	if(value!='')
+  if(value!='')
 	$('#title_id').css({"border-color":"#63dfff"});
+    	$('#error_title').css({"color":"#00A3E8"});
 }
 function collectin_title(value)
 {
@@ -463,32 +490,7 @@ function collectin_title(value)
 	$('#error_title').css({"color":"#00A3E8"});
 }
 $(document).ready(function() {
-	
-	$('#remove_btn').attr("type", "button");
-     
-	  $('.edit').editable('<?php echo base_url()?>ajax/update_ajax_layout', {
-		 id : 'elementid',
-         indicator : 'Saving...',
-		 submitdata : {layout_id: $('#layout_id').val()},
-         tooltip   : 'Click to edit...',
-		 cancel : 'Cancel',
-		 submit  : 'Save',
-		 onblur : 'ignore',
-     });
-	 
-	 
-	 $('#remove_btn').click(function(){
-	var r = confirm("Are you sure you want to delete");
-	if (r == true) {
-		var del_id=$('#hidden_layout_id').val();
-		window.location.href='<?php echo base_url() ?>layout_controller/layout_delete/'+del_id;
-	} else {
-		
-	}
 
-});
-	 
-	 
 });
 
 
@@ -532,7 +534,7 @@ function audience_filter(selectedValue)
 	if($add_form=='new')
 	{
 	?>
-	<script>
+	<script type="text/javascript">
 	    card_expand();
     </script>
 <?php  }
@@ -547,7 +549,7 @@ else
 	if($add_form=='layouted')
 	{
 	?>
-	<script>    
+	<script type="text/javascript">    
 	document.getElementById('my_form').style.display='block';
 
 	$('#form_act_id').parent().toggleClass('splitPaneRightSelected'); 
@@ -583,7 +585,7 @@ else
 		if(!empty($query))
 		{
 	?>
-	<script>
+	<script type="text/javascript">
         document.getElementById('my_form').style.display='block';	
 
     </script>
@@ -591,7 +593,7 @@ else
 else
 {
 	?>
-	<script>
+	<script type="text/javascript">
         document.getElementById('my_form').style.display='none';	
 
     </script>
@@ -603,7 +605,7 @@ else
 	if($add_form=='layout_delete')
 	{
 	?>
-	<script>
+	<script type="text/javascript">
         document.getElementById('my_form').style.display='none';	
 
     </script>
@@ -612,6 +614,7 @@ else
 
 <script type="text/javascript">
 $(document).ready(function(){
+
 function onsuccess(response,status){
   $("#loader").hide();
   $("#onsuccessmsg").html('<div id="msg" style="margin-left:127px">'+response+'</div>');
@@ -619,17 +622,16 @@ function onsuccess(response,status){
 $('#save_btn').click(function(){
 	$('#my_form').attr('action', '<?php echo base_url();?>layout_controller/add_layout');
 });
-
 $('#save_btn_mobile').click(function(){
 $('#my_form').attr('action', '<?php echo base_url();?>layout_controller/add_layout');
 });
 });
 </script>
 
-<script src="<?php echo base_url() ?>assets/js/admin/mlpmenu/classie.js"></script>
-<script src="<?php echo base_url() ?>assets/js/admin/mlpmenu/mlpushmenu.js"></script>
-<script src="<?php echo base_url() ?>assets/js/admin/mlpmenu/splitPlane.js"></script>
-<script src="<?php echo base_url() ?>assets/js/admin/jquery.jeditable.mini.js"></script>
+<script type="text/javascript" src="<?php echo base_url() ?>assets/js/admin/mlpmenu/classie.js"></script>
+<script type="text/javascript" src="<?php echo base_url() ?>assets/js/admin/mlpmenu/mlpushmenu.js"></script>
+<script type="text/javascript" src="<?php echo base_url() ?>assets/js/admin/mlpmenu/splitPlane.js"></script>
+<script type="text/javascript" src="<?php echo base_url() ?>assets/js/admin/jquery.jeditable.mini.js"></script>
 
 </body>
 </html>
