@@ -775,10 +775,10 @@
             var sourceSelect = self.element;
             self.initialDisplay = sourceSelect.css("display");
             sourceSelect.css("display", "none");
-            self.initialMultiple = sourceSelect.prop("multiple");
+//            self.initialMultiple = sourceSelect.prop("multiple");
             self.isMultiple = self.initialMultiple;
             if (options.forceMultiple != null) { self.isMultiple = options.forceMultiple; }
-            sourceSelect.prop("multiple", true);
+//            sourceSelect.prop("multiple", true);
             self.sourceSelect = sourceSelect;
 
             // append the control that resembles a single selection select

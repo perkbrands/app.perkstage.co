@@ -579,7 +579,7 @@
                                   			   <select id="s4" multiple="multiple" name="audience_select[]">
                                         		<option>All</option>
                                         			<?php foreach($audience_data as $row) {?>
-                                            			<option value="<?php echo $row->audience_id;?>" <?php if(isset($audiencedata) && $audiencedata!='' && isset($postback)) if(in_array($row->audience_id, $postback)){ echo "selected";}?>><?php  echo substr($row->audience_profile_title ,0,17);?></option>
+                                            			<option value="<?php echo $row->audience_id;?>" <?php if(isset($audiencedata) && $audiencedata!='' && isset($postback)) if(in_array($row->audience_id, $postback)){ echo "selected";}?>><?php  echo substr($row->audience_title ,0,17);?></option>
                                               <?php  } ?>
                                     			</select>
     										</p>                                
