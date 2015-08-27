@@ -15,7 +15,6 @@
 |
 */
 //$config['base_url'] = 'http://'.$_SERVER['HTTP_HOST']; //you can also leave blank this CI tend to find this by himself
-// $config['base_url'] = 'http://app.perkstage.co';
 $config['base_url'] = '';
 
 /*

@@ -7,9 +7,7 @@ class People_user_controller extends CI_Controller {
     * send him to the login page
     * @return void
     */	
-	public function __costruc()
-	{
-		
+	public function __costruc() {
 		$this->load->library('session');		
 	}
 	function index()
@@ -175,81 +173,71 @@ class People_user_controller extends CI_Controller {
 		$data['audiencedata']=$this->people_user_model->checked_audience();
 		$this->load->view('admin/people_users_view',$data);	
 	}
-	
-
 
 	public function people_add()
 	{
-		
 		$role_id=$this->input->post('user_role');
 		
 	  	$this->load->model('people_user_model');
-		if(isset($_FILES["poeple_image"]["name"]) && $_FILES["poeple_image"]["name"]!='')
-		{
-			$file_name= $_FILES["poeple_image"]["name"];
-			$this->people_user_model->do_upload($file_name);
-		}			
+		if(isset($_FILES["poeple_image"]["name"]) && 
+                $_FILES["poeple_image"]["name"]!='') {
+          $file_name= $_FILES["poeple_image"]["name"];
+          $this->people_user_model->do_upload($file_name);
+		}
+        
 		$data['query']=$this->people_user_model->people_add_administrator();
 		$data['updated_id']=$data['query'];
+        
 		if($data['query']=='User Already Exist'){
-		$data['error']=$data['query'];
+          $data['error']=$data['query'];
 		}
+        /* anew = New Administrator, Role id = 1
+         * enew = New Editor, Role id = 2
+         * mnew = New Member, Role id = 3
+         */
 		if($this->uri->segment('3')=='anew'){
 			$role_id=1;
-			}
-			if($this->uri->segment('3')=='enew'){
-				$role_id=2;
-			}
-			if($this->uri->segment('3')=='mnew'){
-				$role_id=3;
-			}
-		if($this->input->post('people_values')=='people_me'){
-		$data['listing_data']=$this->people_user_model->people_me_list();
-		$data['timezone_data']=$this->people_user_model->people_timezone_listing();
-		$data['me']='people_me';
-		$data['roles']=$role_id;
-		}else{
-		$data['listing_data']=$this->people_user_model->people_administrator_listing();
-		$data['roles']=$role_id;
 		}
-			
-			
-			if($this->uri->segment('3')!='anew' || $this->uri->segment('3')!='enew' || $this->uri->segment('3')!='mnew'){
-			$role_id=$this->input->post('user_role');
-			}
+        if($this->uri->segment('3')=='enew'){
+            $role_id=2;
+        }
+        if($this->uri->segment('3')=='mnew'){
+            $role_id=3;
+        }
+		if($this->input->post('people_values')=='people_me'){
+          $data['listing_data']=$this->people_user_model->people_me_list();
+          $data['timezone_data']=$this->people_user_model->people_timezone_listing();
+          $data['me']='people_me';
+          $data['roles']=$role_id;
+		}else{
+          $data['listing_data']=$this->people_user_model->people_administrator_listing();
+          $data['roles']=$role_id;
+		}	
+
+        if($this->uri->segment('3')!='anew' || $this->uri->segment('3')!='enew' 
+                || $this->uri->segment('3')!='mnew'){
+          $role_id=$this->input->post('user_role');
+        }
 			
 		$edit_idd=$this->input->post('hiddenid');
 		if($edit_idd!=''){
-		if($data['roles']=='1')
-		{
-		$data['query']=$this->people_user_model->selectone_people_administrator();
-		$data['edit_data']='edited';	
+          if($data['roles']=='1') {
+            $data['query']=$this->people_user_model->selectone_people_administrator();
+            $data['edit_data']='edited';	
+          }
+          if($data['roles']=='2') {
+            $data['query']=$this->people_user_model->selectone_people_editor();	
+            $data['edit_data']='edited';
+          }
+          if($data['roles']=='3') {
+            $data['query']=$this->people_user_model->selectone_people_member();
+            $data['edit_data']='edited';	
+          }
 		}
 		
-		if($data['roles']=='2')
-		{
-		$data['query']=$this->people_user_model->selectone_people_editor();	
-		$data['edit_data']='edited';
-		}
-		
-		if($data['roles']=='3')
-		{
-		$data['query']=$this->people_user_model->selectone_people_member();
-		$data['edit_data']='edited';	
-		}
-		
-		
-		}
-			
 		$data['audiencedata']=$this->people_user_model->checked_audience();
-		$data['audience_data']=$this->people_user_model->people_audience_listing();		
-		
-			$this->load->view('admin/people_users_view',$data);
-			
-		
-	
-		
-								
+		$data['audience_data']=$this->people_user_model->people_audience_listing();
+		$this->load->view('admin/people_users_view',$data);						
 	}
 	
 	 public function people_administrator_delete()
