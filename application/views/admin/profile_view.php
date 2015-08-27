@@ -434,19 +434,21 @@
 
 <!-- Tags -->                            
                             <div class="splitPaneRightRow" >
-                               <h3  onclick="showSplitPlaneRow(this);">Tags</h3>
-                                 <?php if(isset($query[0]->agency_profile_tags_tags)){
-								$tag_profile = rtrim($query[0]->agency_profile_tags_tags,',');
-								
-								$tags_count=0;
-							if($tag_profile!=''){
-								$tags=explode(',',$tag_profile);
-							
-								$tags_count=count($tags);
-							}
-							}
-								?>
-                         <div class="splitPlaneQuickDetails" id="form_tag_id"><?php if(isset($tags_count)){ echo $tags_count;} ?> tags.</div>
+                                <h3 onclick="showSplitPlaneRow(this);">Tags</h3>
+                                <?php 
+                                    if(isset($query[0]->agency_profile_tags_tags)) {
+                                        $tag_profile = rtrim($query[0]->agency_profile_tags_tags,',');
+                                        $tags_count=0;
+                                        
+                                        if($tag_profile!='') {
+                                            $tags=explode(',',$tag_profile);
+                                            $tags_count=count($tags);
+                                        }
+                                    }
+                                ?>
+                                <div class="splitPlaneQuickDetails" id="form_tag_id">
+                                    Expand to view and add tags.
+                                </div>
                                 <ul class="splitPaneRightDetails">
                                     <li class="row">
                                         <div class="labelInfo col span_4">Tags</div>

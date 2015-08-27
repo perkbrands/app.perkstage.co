@@ -579,7 +579,7 @@
                             </div>
                             <input type="hidden" value="<?php if(isset($query[0]->account_id)) echo $query[0]->account_id;  ?>" name="hiddenid" id="hiddenid" />
                             <div class="splitPaneRightRow" >
-                                <h3  onclick="showSplitPlaneRow(this);">Notes</h3><div class="splitPlaneQuickDetails" id="form_not_id" class="div_form_id"><?php if(isset($query[0]->account_notes)) echo $query[0]->account_notes; ?></div>
+                                <h3  onclick="showSplitPlaneRow(this);">Notes</h3><div class="splitPlaneQuickDetails">Expand to view and add notes.</div>
                                 <ul class="splitPaneRightDetails">
                                   <li class="row">
                                     <div class="labelInfo col span_4">Notes</div>

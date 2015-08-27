@@ -342,6 +342,7 @@ class People_user_model extends CI_Model {
 		$administrator_user_data = array(
              'user_status'=>$this->input->post('user_status'),
              'user_name'=>$this->input->post('username'),
+             'user_nickname'=>$this->input->post('nickname'),            
 			 'user_email'=>$this->input->post('username'),
              'user_profile_image'=>$poeple_image,			 
              'user_password'=>base64_encode($this->input->post('password')),
@@ -357,6 +358,7 @@ class People_user_model extends CI_Model {
 		$administrator_user_data = array(
              'user_status'=>$this->input->post('user_status'),
              'user_name'=>$this->input->post('username'),
+             'user_nickname'=>$this->input->post('nickname'),
 			 'user_email'=>$this->input->post('username'),			 
              'user_password'=>base64_encode($this->input->post('password')),
              'user_first_name'=>$this->input->post('first_name'),
