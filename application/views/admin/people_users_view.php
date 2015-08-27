@@ -614,7 +614,7 @@
                                   			   <select id="s4" multiple="multiple" name="audience_select[]">
                                         		<option>All</option>
                                         			<?php foreach($audience_data as $row) {?>
-                                            			<option value="<?php echo $row->audience_id;?>" <?php if(isset($audiencedata) && $audiencedata!='' && isset($postback)) if(in_array($row->audience_id, $postback)){ echo "selected";}?>><?php  echo substr($row->audience_profile_title ,0,17);?></option>
+                                            			<option value="<?php echo $row->audience_id;?>" <?php if(isset($audiencedata) && $audiencedata!='' && isset($postback)) if(in_array($row->audience_id, $postback)){ echo "selected";}?>><?php  echo substr($row->audience_title ,0,17);?></option>
                                               <?php  } ?>
                                     			</select>
     										</p>                                
@@ -627,16 +627,19 @@
 <!-- Tags -->                            
                             <div class="splitPaneRightRow" >
                                 <h3  onclick="showSplitPlaneRow(this);">Tags</h3>
-                                 <?php if(isset($query[0]->user_tags_tags)){
-								$tag_user = rtrim($query[0]->user_tags_tags,',');
-								$tags=explode(',',$tag_user);
-								$tags_count=count($tags);
-							}
-								?>
-                                <div class="splitPlaneQuickDetails" id="form_tag_id"><?php if(isset($tags_count)){ echo $tags_count;} ?> tags.</div>
+                                <?php 
+                                    if(isset($query[0]->user_tags_tags)){
+                                        $tag_user = rtrim($query[0]->user_tags_tags,',');
+                                        $tags=explode(',',$tag_user);
+                                        $tags_count=count($tags);
+                                    }
+                                ?>
+                                <div class="splitPlaneQuickDetails" id="form_tag_id">
+                                    Expand to view and add tags.
+                                </div>
                                 <ul class="splitPaneRightDetails">
                                     <li class="row">
-                                        <div class="labelInfo col span_4">Tags</div>
+                                        <div class="labelInfo col span_4">TagsTest</div>
                                         <div class="formInfo col span_12"><textarea class="doubleHeight" name="user_tags" /><?php if(isset($query[0]->user_tags_tags)){ echo $query[0]->user_tags_tags;}?></textarea></div>
                                     </li>
                                 </ul>

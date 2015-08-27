@@ -6,7 +6,7 @@ class Layout_controller extends CI_Controller {
     * send him to the login page
     * @return void
     */	
-	public function __costruc()
+	public function __costruct()
 	{
 		$this->load->library('session');
 	}
@@ -25,17 +25,17 @@ class Layout_controller extends CI_Controller {
 		$data['allcollection']=$this->layout_model->get_design();
 		$data['alldesign']=$this->layout_model->get_design();	
 		$this->load->view('admin/layout',$data);					
-
 	}
 
 	public function add_layout()
 	{		
 		$this->load->model('layout_model');
-		if(isset($_FILES["layout_image"]["name"]) && $_FILES["layout_image"]["name"]!='')
+                if(isset($_FILES["layout_image"]["name"]) && $_FILES["layout_image"]["name"]!='')
 		{		
 			$file_name= $_FILES["layout_image"]["name"];
 			$this->layout_model->do_upload($file_name);
 		}
+
 		$data['query']=$this->layout_model->layout_add();
 		$data['listing_data']=$this->layout_model->layout_listing();
 		$data['designaccount']=$this->layout_model->select_design_layout();
@@ -95,7 +95,6 @@ class Layout_controller extends CI_Controller {
 		$this->load->model('layout_model');
 		$data['version_data']=$this->layout_model->version_listing();
 		$data['query']=$this->layout_model->layout_save();
-		
 		$html = $this->input->post('lst_html_version');
 		$css = $this->input->post('lst_css_version');
 		$script = $this->input->post('lst_script_version');
