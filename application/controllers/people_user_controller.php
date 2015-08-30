@@ -6,6 +6,7 @@ class People_user_controller extends CI_Controller {
     * Check if the user is logged in, if he's not, 
     * send him to the login page
     * @return void
+    * Bug #11 is in this file somewhere - going to find it :)
     */	
 	public function __costruc() {
 		$this->load->library('session');		
