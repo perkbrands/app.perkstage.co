@@ -13,6 +13,9 @@
 <!--/*<link rel="stylesheet" type="text/css" href="css/styles.css"/>
 <link rel="stylesheet" type="text/css" href="css/responsive.css"/>
 */-->
+<!-- Bug Sprint #2 - Issue 11 - email required for text notification is in the -->
+<!-- Javascript for this file in addition to some data handling on the model -->
+<!-- side of the house. -->
 <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/css/admin/styles.css" />
 <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/css/admin/responsive.css" />
 <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/css/admin/mlpmenu/component.css" />
