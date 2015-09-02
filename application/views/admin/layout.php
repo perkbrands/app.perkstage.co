@@ -6,6 +6,7 @@
 <title>Layout</title>
 <!--/*<link rel="stylesheet" type="text/css" href="css/styles.css"/>
 <link rel="stylesheet" type="text/css" href="css/responsive.css"/>
+  Possible source for bug#5
 */-->
 <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/css/admin/styles.css" />
 <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/css/admin/responsive.css" />
