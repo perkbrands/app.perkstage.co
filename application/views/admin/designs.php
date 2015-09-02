@@ -29,8 +29,29 @@
             $("#s4").dropdownchecklist({ firstItemChecksAll: true,maxDropHeight: 120,width:320 });
         });
     </script>
-         
-
+    <script>
+        /**
+         * Unique ids for splitPaneRight card elements.
+         * 
+         * @type @exp;Object@call;freeze
+         */
+        var SPLIT_PANE_RIGHT_ELEMENTS = Object.freeze({
+            STATUS    : "form_act_id",
+            PROFILE   : "form_detail_id",
+            PLACEMENT : "form_placement_id",
+            TYPE      : "form_type_id",
+            TAGS      : "form_tag_id",
+            NOTES     : "form_not_id"
+        });
+        
+        // Session storage name for storing splitPaneRight card states.
+        var splitPaneRightState = "formState";
+        // Boolean value to determine if user creating a new item.  Expand splitPaneRight if true.
+        var isNew = "isNew";        
+        var formState; // Container for saving the local state of splitPaneRight.
+        
+        document.addEventListener("DOMContentLoaded", function() { restoreSplitPaneRightState(); });
+    </script>
 </head>
 <body>  
 <?php  ?>
@@ -87,19 +108,16 @@
                     
                 	 <ul class="cardsBox">                                 
 								
-                               <?php  if(isset($query) && $query!='') { ?>                               	
-                                 <a href="<?php echo base_url(); ?>designs/design/new">
-							     <li id="new_design" >
-                                  <div class="plusSign">+</div>
-                                    <div class="plusSignText">New Design</div>
-                                   
-                                </li>
+                                <?php  if(isset($query) && $query!='') { ?>
+                                <a href="<?php echo base_url(); ?>designs/design/new">
+                                    <li id="new_design" onclick="saveSplitPaneRightState(true);">
+                                        <div class="plusSign">+</div>
+                                        <div class="plusSignText">New Design</div>
+                                    </li>
                                 </a>
-                                 <?php }
-								 else
-								 { ?>
-							     <li id="new_design" onclick="card_expand();">
-                                  <div class="plusSign">+</div>
+                                <?php } else { ?>
+                                <li id="new_design" onclick="card_expand();saveSplitPaneRightState(true);">
+                                    <div class="plusSign">+</div>
                                     <div class="plusSignText">New Design</div>
                                 </li>
                                  <?php } ?> 
@@ -112,7 +130,7 @@
                                     <p class="label"><?php echo substr($row->design_title,0,40);?></p>
                                     
                                     <p class="options">
-                                    <span id="setting_id"><?php echo "<a  href=".base_url()."designs/design_setting/$row->design_id>Settings</a>";?><span class="pipe">|</span><a href="<?php echo base_url()?>designs/manage_design/<?php echo $row->design_id; ?>">Manage</a></span>
+                                    <span id="setting_id"><?php echo "<a href=".base_url()."designs/design_setting/$row->design_id>Settings</a>";?><span class="pipe">|</span><a href="<?php echo base_url()?>designs/manage_design/<?php echo $row->design_id; ?>">Manage</a></span>
                                     </p>
                                     
                                     <?php if($row->design_status==1) {?>
@@ -165,29 +183,23 @@
                                 <a href="<?php echo base_url(); ?>designs/all_design"><li><button type="button" />View All</button></li></a>
                          </ul>
                        </form>
-                            
                             <div class="leftPaneFiltersDetails">
                                 <p><?php echo count($listing_data);  ?> Design(s)</p>
                             </div>
-                            <ul class="cardsBox">                                 
-								
-                               <?php  if(isset($query) && $query!='') { ?>                               	
-                                 <a href="<?php echo base_url(); ?>designs/design/new">
-							     <li id="new_design" >
-                                  <div class="plusSign">+</div>
-                                    <div class="plusSignText">New Design</div>
-                                   
-                                </li>
+                            <ul class="cardsBox">
+                                <?php  if(isset($query) && $query!='') { ?>
+                                <a href="<?php echo base_url(); ?>designs/design/new">
+                                    <li id="new_design" onclick="saveSplitPaneRightState(true);">
+                                        <div class="plusSign">+</div>
+                                        <div class="plusSignText">New Design</div>
+                                    </li>
                                 </a>
-                                 <?php }
-								 else
-								 { ?>
-							     <li id="new_design" onclick="card_expand();">
-                                  <div class="plusSign">+</div>
+                                <?php } else { ?>
+                                <li id="new_design" onclick="card_expand();saveSplitPaneRightState(true);">
+                                    <div class="plusSign">+</div>
                                     <div class="plusSignText">New Design</div>
                                 </li>
-                                 <?php } ?> 
-   
+                                <?php } ?>
                                 <?php foreach($listing_data as $row){ ?>
                                  <?php if(!empty($query)) {?><li <?php if($row->design_id==$query[0]->design_id) {?> class="selected" <?php } ?>> <?php } else { ?>
                                		<li <?php if($row->design_id==$this->uri->segment(3)){?> class="selected" <?php }else{ ?> style="border:1px solid #535a60"<?php } ?>>
@@ -244,7 +256,7 @@
                         </div>
                         <?php } ?>  <!-- Status -->                            
                             <div class="splitPaneRightRow <?php  if(isset($query[0]->design_status)  && $query[0]->design_status==1) {?> statusGreen <?php } else if(isset($query[0]->design_status)  && $query[0]->design_status==0){ ?>statusRed <?php } ?>">
-                            <h3  onclick="showSplitPlaneRow(this);">Status</h3><div class="splitPlaneQuickDetails" id="form_act_id"><?php if(isset($query[0]->design_status) && $query[0]->design_status==1){echo 'Active';}else{echo 'Paused';}?></div>
+                            <h3 onclick="showSplitPlaneRow(this);saveSplitPaneCardState('form_act_id', null);">Status</h3><div class="splitPlaneQuickDetails" id="form_act_id"><?php if(isset($query[0]->design_status) && $query[0]->design_status==1){echo 'Active';}else{echo 'Paused';}?></div>
                                 <ul class="splitPaneRightDetails">
                                     <li class="row">
                                       <div class="labelInfo col span_4">Status</div>
@@ -259,7 +271,7 @@
                                 </ul>
                             </div>
 <!-- Placement -->          <div class="splitPaneRightRow">
-                               <h3  onclick="showSplitPlaneRow(this);">Profile</h3><div class="splitPlaneQuickDetails" id="form_detail_id"><?php if(isset($query[0]->	design_profile_title)) echo $query[0]->design_profile_title; ?></div>
+                               <h3 onclick="showSplitPlaneRow(this);saveSplitPaneCardState('form_detail_id', null);">Profile</h3><div class="splitPlaneQuickDetails" id="form_detail_id"><?php if(isset($query[0]->	design_profile_title)) echo $query[0]->design_profile_title; ?></div>
                                 <ul class="splitPaneRightDetails">
                                                                 
                                   <?php if(isset($query[0]->design_profile_image) && $query[0]->design_profile_image!=''){ ?>
@@ -294,7 +306,7 @@
                                 </ul>
                             </div>                 
                             <div class="splitPaneRightRow ">
-                                <h3   onclick="showSplitPlaneRow(this);">Placement</h3><div class="splitPlaneQuickDetails" id="form_placement_id"><?php /*?>Selected<?php */?></div>
+                                <h3 onclick="showSplitPlaneRow(this);saveSplitPaneCardState('form_placement_id', null);">Placement</h3><div class="splitPlaneQuickDetails" id="form_placement_id"><?php /*?>Selected<?php */?></div>
                                 <ul class="splitPaneRightDetails ">
                                     
                                     <li class="row">
@@ -320,7 +332,7 @@
                             </div>
 
                            <div class="splitPaneRightRow">
-                           <h3  onclick="showSplitPlaneRow(this);">Type</h3><div class="splitPlaneQuickDetails" id="form_type_id">Web Page</div>
+                           <h3 onclick="showSplitPlaneRow(this);saveSplitPaneCardState('form_type_id', null);">Type</h3><div class="splitPlaneQuickDetails" id="form_type_id">Web Page</div>
                              <ul class="splitPaneRightDetails">
                                <li class="row">
                                 <div class="labelInfo col span_4">Design Type</div>
@@ -344,7 +356,8 @@
 							}
 							
 								?>
-                                <h3  onclick="showSplitPlaneRow(this);">Tags</h3><div class="splitPlaneQuickDetails" id="form_tag_id"><?php if(isset($query[0]->design_tag) &&$query[0]->design_tag!=''){ echo $tags_count;} else{echo '0';}?> Tags</div>
+                                <h3 onclick="showSplitPlaneRow(this);saveSplitPaneCardState('form_tag_id', null);">Tags</h3>
+                                <div class="splitPlaneQuickDetails" id="form_tag_id"><?php if(isset($query[0]->design_tag) &&$query[0]->design_tag!=''){ echo $tags_count;} else{echo '0';}?> Tags</div>
                                 <ul class="splitPaneRightDetails">
                                     <li class="row">
                                         <div class="labelInfo col span_4">Tags</div>
@@ -354,7 +367,8 @@
                             </div>
 <!-- Notes-->                            
                             <div class="splitPaneRightRow" >
-                                <h3  onclick="showSplitPlaneRow(this);">Notes</h3><div class="splitPlaneQuickDetails" id="form_not_id">Expand to view and add notes.</div>
+                                <h3 onclick="showSplitPlaneRow(this);saveSplitPaneCardState('form_not_id', null);">Notes</h3>
+                                <div class="splitPlaneQuickDetails" id="form_not_id">Expand to view and add notes.</div>
                                 <ul class="splitPaneRightDetails">
                                    <li class="row">
                                     <div class="labelInfo col span_4">Notes</div>
@@ -397,8 +411,87 @@
         
     </div><!-- /pusher -->
 </div>
-
 <script type="text/javascript">
+   /**
+    * Returns splitPaneRight cards to their previous expanded or collapsed state.
+    * Initializes splitPaneRight state first time visit.
+    * 
+    * @returns {Nothing}
+    */
+   function restoreSplitPaneRightState () {
+       var clearSessionStorage = {}; // For clearing state information from session storage.
+       var isNewSessionStorage;      // For determining if user is creating new item.
+
+       // Declare session storage for isNew.
+       if(!sessionStorage[isNew]) {
+           sessionStorage[isNew] = JSON.stringify(false);
+           isNewSessionStorage = false;
+       } else { // Already declared, so fetch previous state.
+           isNewSessionStorage = JSON.parse(sessionStorage[isNew]);
+       }
+
+       // Declare session storage for splitPaneRightState.
+       if (!sessionStorage[splitPaneRightState]) {
+           formState = {};
+           // Initialize splitPaneRight state.
+           for (var key in SPLIT_PANE_RIGHT_ELEMENTS) {
+               formState[SPLIT_PANE_RIGHT_ELEMENTS[key]] = false;
+           }
+           sessionStorage[splitPaneRightState] = JSON.stringify(formState);
+       } else { // Already declared, so fetch previous state.
+           formState = JSON.parse(sessionStorage[splitPaneRightState]);
+       }
+
+       if (!isNewSessionStorage) {
+           // Expand card(s).
+           for (var key in formState) {
+               if (formState[key]) {
+                   showSplitPlaneRow("#" + key);
+               }
+               clearSessionStorage[SPLIT_PANE_RIGHT_ELEMENTS[key]] = false;
+           }
+       } else {
+           card_expand();
+       }
+
+       // Clear state information from session storage.
+       sessionStorage[splitPaneRightState] = JSON.stringify(clearSessionStorage);
+   }
+
+   /**
+    * Saves the expanded or collapsed state of a card in splitPaneRight.
+    * 
+    * @param {string} index The card state to save.
+    * @param {boolean} value Flag for toggling state, can be null.  True = expanded, False = collapsed, Null = toggle state
+    * @returns {Nothing}
+    */
+   function saveSplitPaneCardState(index, value) {
+       // Toggle or set state of splitPaneRight card.
+       if (value === null) {
+           formState[index] = formState[index] === null ? true : !formState[index];
+       } else {
+           formState[index] = value;
+       }
+   }
+
+   /**
+    * Saves the expanded or collapsed state of splitPaneRight cards.
+    * 
+    * @param {boolean} creatingNew Flag to determine if user is creating a new item.
+    * @returns {Nothing}
+    */
+   function saveSplitPaneRightState(creatingNew) {
+       if(creatingNew) {
+           sessionStorage[isNew] = JSON.stringify(true);
+           for (var key in SPLIT_PANE_RIGHT_ELEMENTS) {
+               formState[SPLIT_PANE_RIGHT_ELEMENTS[key]] = false;
+           }
+       } else {
+           sessionStorage[isNew] = JSON.stringify(false);
+       }
+
+       sessionStorage[splitPaneRightState] = JSON.stringify(formState);
+   }
 function submit_change_val(select_value){
 $('#selected_value').val(select_value);
 var	inputValue=$('#input_id').val();
@@ -417,7 +510,8 @@ $('#search_form').submit();
 $(document).ready(function() {
 
 	$('#cancel_btn').attr("type", "button");
-	$('#save_btn').click(function(e) { 
+	$('#save_btn').click(function(e) {
+            saveSplitPaneRightState(false);
 	var design_val= $('#design_title_id').val();
 	if(design_val==''){
 		$('#design_title_id').css({"border-color":"red"});
@@ -440,6 +534,7 @@ $(document).ready(function() {
 	}
 	});
 	$('#save_btn_mobile').click(function(e) {
+            saveSplitPaneRightState(false);
 	var design_val= $('#title_id').val();
 	if(design_val==''){
 		$('#title_id').css({"border-color":"red"});
@@ -447,35 +542,51 @@ $(document).ready(function() {
 		return false;
 	}
 	});
-});	
+});
+    /**
+     * Expands any un-expanded cards in splitPaneRight.
+     * 
+     * @returns {Nothing}
+     */
+    function card_expand() {
+        document.getElementById('my_form').style.display='block';
 
-function card_expand()
-{
-	document.getElementById('my_form').style.display='block';
-	$('#form_act_id').parent().toggleClass('splitPaneRightSelected'); 
-	$('#form_act_id').parent().children("ul").eq(0).slideToggle(300); 
-	$('#form_act_id').parent().children(".splitPlaneQuickDetails").eq(0).toggle(0); 
-	
-	$('#form_placement_id').parent().toggleClass('splitPaneRightSelected'); 
-	$('#form_placement_id').parent().children("ul").eq(0).slideToggle(300); 
-	$('#form_placement_id').parent().children(".splitPlaneQuickDetails").eq(0).toggle(0); 
+        // Expand any collapsed cards and mark as expanded.
+        for (var key in formState) {
+            if (!formState[key]) {
+                showSplitPlaneRow("#" + key);
+                formState[key] = true;
+            }
+        }
+    }
 
-	$('#form_detail_id').parent().toggleClass('splitPaneRightSelected'); 
-	$('#form_detail_id').parent().children("ul").eq(0).slideToggle(300); 
-	$('#form_detail_id').parent().children(".splitPlaneQuickDetails").eq(0).toggle(0); 
-
-	$('#form_type_id').parent().toggleClass('splitPaneRightSelected'); 
-	$('#form_type_id').parent().children("ul").eq(0).slideToggle(300); 
-	$('#form_type_id').parent().children(".splitPlaneQuickDetails").eq(0).toggle(0); 
-
-	$('#form_tag_id').parent().toggleClass('splitPaneRightSelected'); 
-	$('#form_tag_id').parent().children("ul").eq(0).slideToggle(300); 
-	$('#form_tag_id').parent().children(".splitPlaneQuickDetails").eq(0).toggle(0); 
-
-	$('#form_not_id').parent().toggleClass('splitPaneRightSelected'); 
-	$('#form_not_id').parent().children("ul").eq(0).slideToggle(300); 
-	$('#form_not_id').parent().children(".splitPlaneQuickDetails").eq(0).toggle(0); 
-}
+//function card_expand()
+//{
+//	document.getElementById('my_form').style.display='block';
+//	$('#form_act_id').parent().toggleClass('splitPaneRightSelected'); 
+//	$('#form_act_id').parent().children("ul").eq(0).slideToggle(300); 
+//	$('#form_act_id').parent().children(".splitPlaneQuickDetails").eq(0).toggle(0); 
+//	
+//	$('#form_placement_id').parent().toggleClass('splitPaneRightSelected'); 
+//	$('#form_placement_id').parent().children("ul").eq(0).slideToggle(300); 
+//	$('#form_placement_id').parent().children(".splitPlaneQuickDetails").eq(0).toggle(0); 
+//
+//	$('#form_detail_id').parent().toggleClass('splitPaneRightSelected'); 
+//	$('#form_detail_id').parent().children("ul").eq(0).slideToggle(300); 
+//	$('#form_detail_id').parent().children(".splitPlaneQuickDetails").eq(0).toggle(0); 
+//
+//	$('#form_type_id').parent().toggleClass('splitPaneRightSelected'); 
+//	$('#form_type_id').parent().children("ul").eq(0).slideToggle(300); 
+//	$('#form_type_id').parent().children(".splitPlaneQuickDetails").eq(0).toggle(0); 
+//
+//	$('#form_tag_id').parent().toggleClass('splitPaneRightSelected'); 
+//	$('#form_tag_id').parent().children("ul").eq(0).slideToggle(300); 
+//	$('#form_tag_id').parent().children(".splitPlaneQuickDetails").eq(0).toggle(0); 
+//
+//	$('#form_not_id').parent().toggleClass('splitPaneRightSelected'); 
+//	$('#form_not_id').parent().children("ul").eq(0).slideToggle(300); 
+//	$('#form_not_id').parent().children(".splitPlaneQuickDetails").eq(0).toggle(0); 
+//}
 
 </script>
 <script>
