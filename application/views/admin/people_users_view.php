@@ -590,8 +590,14 @@
 
                                     <li class="row">
                                         <div class="labelInfo col span_4">Receive emails at:</div>
-                                        <div class="formInfo col span_12"><input class=""  type="email" name="recieve_email_at" value="<?php if(isset($query[0]->user_notification_recieve_email_at)){ echo $query[0]->user_notification_recieve_email_at;}?>" id="recieve_email" <?php /*?>onkeyup="email1(this.value)"<?php */?>  /></div>
-                                    </li>
+                                        <div class="formInfo col span_12">
+                                          <input class=""  type="email" name="recieve_email_at" 
+                                                 value="<?php if(isset($query[0]->user_notification_recieve_email_at)){ echo $query[0]->user_notification_recieve_email_at;}?>" 
+                                                 id="recieve_email" onkeyup="email1(this.value)" 
+                                                 onblur="if(this.value==''){this.value='Email Address'}" 
+                                                 onclick="if(this.value=='Email Address'){this.value=''}"                                                  
+                                                 />
+                                          <span class="required" id="notify_email_error"></span></div></li>
                                     
                                     <li class="row">
                                         <div class="labelInfo col span_4">Receive texts at:</div>
@@ -852,13 +858,13 @@ $(document).ready(function() {
 	}
 
 
-	/*var email_val= $('#recieve_email').val();
+	var email_val= $('#recieve_email').val();
 	if(email_val==''){
 		$('#recieve_email').css({"border-color":"red"});
 		$('#recieve_email').focus();
-		$('#error_message').css({"color":"red"});		
+		$('#notify_email_error').css({"color":"red"});			
 		return false;
-	}*/
+	}
 	/*var email_val= $('#last_email').val();
 	if(email_val==''){
 		$('#last_email').css({"border-color":"red"});
@@ -923,7 +929,7 @@ $(document).ready(function() {
 	}
 
 
-	/*var rec_email_val= $('#recieve_email').val();
+	var rec_email_val= $('#recieve_email').val();
 	if(rec_email_val==''){
 		
 		$('#form_opt_id').parent().toggleClass('splitPaneRightSelected'); 
@@ -932,9 +938,9 @@ $(document).ready(function() {
 		
 		$('#recieve_email').css({"border-color":"red"});
 		$('#recieve_email').focus();
-		$('#error_message').css({"color":"red"});		
+		$('#notify_email_error').css({"color":"red"});	
 		return false;
-	}*/
+	}
 	
 	
 	
